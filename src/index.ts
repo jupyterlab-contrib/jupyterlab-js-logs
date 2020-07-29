@@ -21,6 +21,9 @@ import LogLevelSwitcher from './logLevelSwitcher';
 
 import jsIconStr from '../style/js.svg';
 
+/**
+ * The command IDs used by the js-logs plugin.
+ */
 export namespace CommandIDs {
   export const checkpoint = 'js-logs:checkpoint';
 
@@ -31,6 +34,9 @@ export namespace CommandIDs {
   export const open = 'js-logs:open';
 }
 
+/**
+ * The main jupyterlab-js-logs plugin.
+ */
 const extension: JupyterFrontEndPlugin<void> = {
   id: 'js-logs',
   autoStart: true,
@@ -51,37 +57,6 @@ const extension: JupyterFrontEndPlugin<void> = {
       namespace: 'jupyterlab-js-logs'
     });
 
-    if (restorer) {
-      restorer.restore(tracker, {
-        command: CommandIDs.open,
-        name: () => 'js-logs'
-      });
-    }
-
-    commands.addCommand(CommandIDs.checkpoint, {
-      execute: () => logConsolePanel?.logger?.checkpoint(),
-      icon: addIcon,
-      isEnabled: () => !!logConsolePanel && logConsolePanel.source !== null,
-      label: 'Add Checkpoint'
-    });
-
-    commands.addCommand(CommandIDs.clear, {
-      execute: () => logConsolePanel?.logger?.clear(),
-      icon: clearIcon,
-      isEnabled: () => !!logConsolePanel && logConsolePanel.source !== null,
-      label: 'Clear Log'
-    });
-
-    commands.addCommand(CommandIDs.level, {
-      execute: (args: any) => {
-        if (logConsolePanel?.logger) {
-          logConsolePanel.logger.level = args.level;
-        }
-      },
-      isEnabled: () => !!logConsolePanel && logConsolePanel.source !== null,
-      label: args => `Set Log Level to ${args.level as string}`
-    });
-
     const jsIcon = new LabIcon({
       name: 'js-logs:js-icon',
       svgstr: jsIconStr
@@ -100,7 +75,6 @@ const extension: JupyterFrontEndPlugin<void> = {
       logConsoleWidget = new MainAreaWidget<LogConsolePanel>({
         content: logConsolePanel
       });
-
       logConsoleWidget.addClass('jp-LogConsole');
       logConsoleWidget.title.label = 'Dev Tools Console Logs';
       logConsoleWidget.title.icon = jsIcon;
@@ -108,7 +82,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       logConsoleWidget.toolbar.addItem(
         'checkpoint',
         new CommandToolbarButton({
-          commands: app.commands,
+          commands,
           id: CommandIDs.checkpoint
         })
       );
@@ -116,7 +90,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       logConsoleWidget.toolbar.addItem(
         'clear',
         new CommandToolbarButton({
-          commands: app.commands,
+          commands,
           id: CommandIDs.clear
         })
       );
@@ -133,11 +107,35 @@ const extension: JupyterFrontEndPlugin<void> = {
       });
 
       app.shell.add(logConsoleWidget, 'main', { mode: 'split-bottom' });
-      tracker.add(logConsoleWidget);
+      void tracker.add(logConsoleWidget);
 
       logConsoleWidget.update();
       commands.notifyCommandChanged();
     };
+
+    commands.addCommand(CommandIDs.checkpoint, {
+      execute: () => logConsolePanel?.logger?.checkpoint(),
+      icon: addIcon,
+      isEnabled: () => logConsolePanel?.source !== null,
+      label: 'Add Checkpoint'
+    });
+
+    commands.addCommand(CommandIDs.clear, {
+      execute: () => logConsolePanel?.logger?.clear(),
+      icon: clearIcon,
+      isEnabled: () => logConsolePanel?.source !== null,
+      label: 'Clear Log'
+    });
+
+    commands.addCommand(CommandIDs.level, {
+      execute: (args: any) => {
+        if (logConsolePanel?.logger) {
+          logConsolePanel.logger.level = args.level;
+        }
+      },
+      isEnabled: () => logConsolePanel?.source !== null,
+      label: args => `Set Log Level to ${args.level as string}`
+    });
 
     commands.addCommand(CommandIDs.open, {
       label: 'Dev Tools Console Logs',
@@ -151,13 +149,6 @@ const extension: JupyterFrontEndPlugin<void> = {
         }
       }
     });
-
-    if (palette) {
-      palette.addItem({
-        command: CommandIDs.open,
-        category: 'Debug'
-      });
-    }
 
     const _debug = console.debug;
     const _log = console.log;
@@ -199,6 +190,20 @@ const extension: JupyterFrontEndPlugin<void> = {
       });
       _error(...args);
     };
+
+    if (palette) {
+      palette.addItem({
+        command: CommandIDs.open,
+        category: 'Developer'
+      });
+    }
+
+    if (restorer) {
+      restorer.restore(tracker, {
+        command: CommandIDs.open,
+        name: () => 'js-logs'
+      });
+    }
   }
 };
 
