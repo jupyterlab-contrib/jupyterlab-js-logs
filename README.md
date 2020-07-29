@@ -4,6 +4,8 @@
 
 JupyterLab extension to show the js logs from the browser dev tools console
 
+![screencast](https://user-images.githubusercontent.com/591645/88792612-c7c60180-d19b-11ea-8467-c23abcabcb09.gif)
+
 ## Requirements
 
 * JupyterLab >= 2.0
@@ -16,7 +18,8 @@ jupyter labextension install jupyterlab-js-logs
 
 ## Contributing
 
-This extension was bootstraped from the [custom-log-console](https://github.com/jupyterlab/extension-examples/tree/master/log-console/custom-log-console) example from the [`jupyterlab-extension-examples`](https://github.com/jupyterlab/extension-examples) repository.
+This extension was bootstrapped from the [custom-log-console](https://github.com/jupyterlab/extension-examples/tree/master/log-console/custom-log-console) example contributed by [Carlos Herrero](https://github.com/hbcarlos), from the [`jupyterlab-extension-examples`](https://github.com/jupyterlab/extension-examples) repository.
+
 
 ### Install
 
