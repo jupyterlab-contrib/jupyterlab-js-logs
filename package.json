@@ -1,0 +1,63 @@
+{
+  "name": "jupyterlab-js-logs",
+  "version": "0.1.0",
+  "description": "JupyterLab extension to show the js logs from the browser dev tools console",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "homepage": "https://github.com/QuantStack/jupyterlab-js-logs",
+  "bugs": {
+    "url": "https://github.com/QuantStack/jupyterlab-js-logs/issues"
+  },
+  "license": "BSD-3-Clause",
+  "author": "jupyterlab-js-logs contributors",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "style": "style/index.css",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QuantStack/jupyterlab-js-logs.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "eslint": "eslint . --ext .ts,.tsx --fix",
+    "eslint:check": "eslint . --ext .ts,.tsx",
+    "prepare": "jlpm run clean && jlpm run build",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^2.0.0",
+    "@jupyterlab/apputils": "^2.0.0",
+    "@jupyterlab/coreutils": "^4.1.0",
+    "@jupyterlab/logconsole": "^2.0.0",
+    "@jupyterlab/mainmenu": "^2.0.0",
+    "@jupyterlab/nbformat": "^2.1.0",
+    "@jupyterlab/rendermime": "^2.0.0",
+    "@jupyterlab/ui-components": "^2.0.0",
+    "@lumino/coreutils": "^1.5.0",
+    "@lumino/widgets": "^1.13.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.0",
+    "rimraf": "^3.0.2",
+    "typescript": "~3.9.0"
+  },
+  "sideEffects": [
+    "style/*.css"
+  ],
+  "jupyterlab": {
+    "extension": true
+  }
+}

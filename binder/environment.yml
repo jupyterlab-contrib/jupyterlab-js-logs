@@ -1,0 +1,7 @@
+name: jupyterlab-js-logs
+channels:
+- conda-forge
+dependencies:
+- python
+- jupyterlab=2
+- nodejs
