@@ -16,6 +16,8 @@ jupyter labextension install jupyterlab-js-logs
 
 ## Contributing
 
+This extension was bootstraped from the [custom-log-console](https://github.com/jupyterlab/extension-examples/tree/master/log-console/custom-log-console) example from the [`jupyterlab-extension-examples`](https://github.com/jupyterlab/extension-examples) repository.
+
 ### Install
 
 The `jlpm` command is JupyterLab's pinned version of

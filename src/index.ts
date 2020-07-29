@@ -13,11 +13,13 @@ import {
 
 import { LoggerRegistry, LogConsolePanel } from '@jupyterlab/logconsole';
 
-import { addIcon, clearIcon, listIcon } from '@jupyterlab/ui-components';
+import { addIcon, clearIcon, LabIcon } from '@jupyterlab/ui-components';
 
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
 import LogLevelSwitcher from './logLevelSwitcher';
+
+import jsIconStr from '../style/js.svg';
 
 export namespace CommandIDs {
   export const checkpoint = 'js-logs:checkpoint';
@@ -80,6 +82,11 @@ const extension: JupyterFrontEndPlugin<void> = {
       label: args => `Set Log Level to ${args.level as string}`
     });
 
+    const jsIcon = new LabIcon({
+      name: 'js-logs:js-icon',
+      svgstr: jsIconStr
+    });
+
     const createLogConsoleWidget = (): void => {
       logConsolePanel = new LogConsolePanel(
         new LoggerRegistry({
@@ -96,7 +103,7 @@ const extension: JupyterFrontEndPlugin<void> = {
 
       logConsoleWidget.addClass('jp-LogConsole');
       logConsoleWidget.title.label = 'Dev Tools Console Logs';
-      logConsoleWidget.title.icon = listIcon;
+      logConsoleWidget.title.icon = jsIcon;
 
       logConsoleWidget.toolbar.addItem(
         'checkpoint',
