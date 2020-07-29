@@ -155,7 +155,7 @@ const extension: JupyterFrontEndPlugin<void> = {
     const _warn = console.warn;
     const _error = console.error;
 
-    console.debug = (...args: string[]): void => {
+    console.debug = (...args: any[]): void => {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
@@ -164,7 +164,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       _debug(...args);
     };
 
-    console.info = console.log = (...args: string[]): void => {
+    console.info = console.log = (...args: any[]): void => {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
@@ -173,7 +173,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       _log(...args);
     };
 
-    console.warn = (...args: string[]): void => {
+    console.warn = (...args: any[]): void => {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'warning',
@@ -182,7 +182,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       _warn(...args);
     };
 
-    console.error = (...args: string[]): void => {
+    console.error = (...args: any[]): void => {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
