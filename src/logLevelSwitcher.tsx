@@ -1,7 +1,11 @@
 import { ReactWidget } from '@jupyterlab/apputils';
+
 import { LogConsolePanel, LogLevel } from '@jupyterlab/logconsole';
+
 import { HTMLSelect } from '@jupyterlab/ui-components';
+
 import { IChangedArgs } from '@jupyterlab/coreutils';
+
 import { UUID } from '@lumino/coreutils';
 
 import React from 'react';

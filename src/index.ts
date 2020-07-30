@@ -13,9 +13,9 @@ import {
 
 import { LoggerRegistry, LogConsolePanel } from '@jupyterlab/logconsole';
 
-import { addIcon, clearIcon, LabIcon } from '@jupyterlab/ui-components';
-
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
+
+import { addIcon, clearIcon, LabIcon } from '@jupyterlab/ui-components';
 
 import LogLevelSwitcher from './logLevelSwitcher';
 
