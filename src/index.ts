@@ -171,9 +171,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     
 
     window.console.debug = (...args: any[]): void => {
-      let data = "";
+      let data = '';
       args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -185,9 +185,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     };
 
     window.console.log = (...args: any[]): void => {
-      let data = "";
+      let data = '';
       args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -199,9 +199,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     };
 
     window.console.info = (...args: any[]): void => {
-      let data = "";
+      let data = '';
       args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -213,9 +213,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     };
 
     window.console.warn = (...args: any[]): void => {
-      let data = "";
+      let data = '';
       args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -227,9 +227,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     };
 
     window.console.error = (...args: any[]): void => {
-      let data = "";
+      let data = '';
       args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -241,9 +241,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     };
 
     window.console.exception = (message?: string, ...args: any[]): void => {
-      let data = "";
+      let data = '';
       args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -255,9 +255,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     };
 
     window.console.trace = (...args: any[]): void => {
-      let data = "";
+      let data = '';
       args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -269,9 +269,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     };
 
     window.console.table = (...args: any[]): void => {
-      let data = "";
+      let data = '';
       args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
       });
 
       logConsolePanel?.logger?.log({
