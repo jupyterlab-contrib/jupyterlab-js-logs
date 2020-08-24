@@ -150,7 +150,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       }
     });
 
-    window.onerror = function(msg, url, lineNo, columnNo, error) {
+    window.onerror = function(msg, url, lineNo, columnNo, error): boolean {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
@@ -171,22 +171,28 @@ const extension: JupyterFrontEndPlugin<void> = {
 
     window.console.debug = (...args: any[]): void => {
       let data = '';
-      args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
+      args.forEach(arg => {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
       });
 
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
-        data 
+        data
       });
       _debug(...args);
     };
 
     window.console.log = (...args: any[]): void => {
       let data = '';
-      args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
+      args.forEach(arg => {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -199,8 +205,11 @@ const extension: JupyterFrontEndPlugin<void> = {
 
     window.console.info = (...args: any[]): void => {
       let data = '';
-      args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
+      args.forEach(arg => {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -213,8 +222,11 @@ const extension: JupyterFrontEndPlugin<void> = {
 
     window.console.warn = (...args: any[]): void => {
       let data = '';
-      args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
+      args.forEach(arg => {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -227,8 +239,11 @@ const extension: JupyterFrontEndPlugin<void> = {
 
     window.console.error = (...args: any[]): void => {
       let data = '';
-      args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
+      args.forEach(arg => {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -241,8 +256,11 @@ const extension: JupyterFrontEndPlugin<void> = {
 
     window.console.exception = (message?: string, ...args: any[]): void => {
       let data = '';
-      args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
+      args.forEach(arg => {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -255,8 +273,11 @@ const extension: JupyterFrontEndPlugin<void> = {
 
     window.console.trace = (...args: any[]): void => {
       let data = '';
-      args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
+      args.forEach(arg => {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
       });
 
       logConsolePanel?.logger?.log({
@@ -269,8 +290,11 @@ const extension: JupyterFrontEndPlugin<void> = {
 
     window.console.table = (...args: any[]): void => {
       let data = '';
-      args.forEach( arg => {
-        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + ' ';
+      args.forEach(arg => {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
       });
 
       logConsolePanel?.logger?.log({
