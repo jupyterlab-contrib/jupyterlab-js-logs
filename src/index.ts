@@ -150,45 +150,136 @@ const extension: JupyterFrontEndPlugin<void> = {
       }
     });
 
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+      logConsolePanel?.logger?.log({
+        type: 'text',
+        level: 'critical',
+        data: `${url}:${lineNo} ${msg}\n${error}`
+      });
+      return false;
+    };
+
     const _debug = console.debug;
     const _log = console.log;
+    const _info = console.info;
     const _warn = console.warn;
     const _error = console.error;
 
-    console.debug = (...args: any[]): void => {
+    const _exception = console.exception;
+    const _trace = console.trace;
+    const _table = console.table;
+    
+
+    window.console.debug = (...args: any[]): void => {
+      let data = "";
+      args.forEach( arg => {
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+      });
+
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
-        data: args.join(' ')
+        data 
       });
       _debug(...args);
     };
 
-    console.info = console.log = (...args: any[]): void => {
+    window.console.log = (...args: any[]): void => {
+      let data = "";
+      args.forEach( arg => {
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+      });
+
       logConsolePanel?.logger?.log({
         type: 'text',
-        level: 'info',
-        data: args.join(' ')
+        level: 'debug',
+        data
       });
       _log(...args);
     };
 
-    console.warn = (...args: any[]): void => {
+    window.console.info = (...args: any[]): void => {
+      let data = "";
+      args.forEach( arg => {
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+      });
+
+      logConsolePanel?.logger?.log({
+        type: 'text',
+        level: 'info',
+        data
+      });
+      _info(...args);
+    };
+
+    window.console.warn = (...args: any[]): void => {
+      let data = "";
+      args.forEach( arg => {
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+      });
+
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'warning',
-        data: args.join(' ')
+        data
       });
       _warn(...args);
     };
 
-    console.error = (...args: any[]): void => {
+    window.console.error = (...args: any[]): void => {
+      let data = "";
+      args.forEach( arg => {
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+      });
+
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
-        data: args.join(' ')
+        data
       });
       _error(...args);
+    };
+
+    window.console.exception = (message?: string, ...args: any[]): void => {
+      let data = "";
+      args.forEach( arg => {
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+      });
+
+      logConsolePanel?.logger?.log({
+        type: 'text',
+        level: 'critical',
+        data: `Exception: ${message}\n${data}`
+      });
+      _exception(...args);
+    };
+
+    window.console.trace = (...args: any[]): void => {
+      let data = "";
+      args.forEach( arg => {
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+      });
+
+      logConsolePanel?.logger?.log({
+        type: 'text',
+        level: 'info',
+        data
+      });
+      _trace(...args);
+    };
+
+    window.console.table = (...args: any[]): void => {
+      let data = "";
+      args.forEach( arg => {
+        data += ((typeof arg === 'object' && arg !== null) ? JSON.stringify(arg) : arg ) + " ";
+      });
+
+      logConsolePanel?.logger?.log({
+        type: 'text',
+        level: 'info',
+        data
+      });
+      _table(...args);
     };
 
     if (palette) {
