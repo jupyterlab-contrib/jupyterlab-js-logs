@@ -168,7 +168,6 @@ const extension: JupyterFrontEndPlugin<void> = {
     const _exception = console.exception;
     const _trace = console.trace;
     const _table = console.table;
-    
 
     window.console.debug = (...args: any[]): void => {
       let data = '';
