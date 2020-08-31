@@ -150,7 +150,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       }
     });
 
-    window.onerror = function(msg, url, lineNo, columnNo, error): boolean {
+    window.onerror = (msg, url, lineNo, columnNo, error): boolean => {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
