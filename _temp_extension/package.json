@@ -1,59 +1,51 @@
 {
   "name": "jupyterlab-js-logs",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "JupyterLab extension to show the js logs from the browser dev tools console",
   "keywords": [
     "jupyter",
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "homepage": "https://github.com/QuantStack/jupyterlab-js-logs",
+  "homepage": "https://github.com/QuantStack/jupyterlab-js-logs.git",
   "bugs": {
-    "url": "https://github.com/QuantStack/jupyterlab-js-logs/issues"
+    "url": "https://github.com/QuantStack/jupyterlab-js-logs.git/issues"
   },
   "license": "BSD-3-Clause",
-  "author": "jupyterlab-js-logs contributors",
+  "author": {
+    "name": "jupyterlab-js-logs contributors",
+    "email": ""
+  },
   "files": [
     "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
-    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}",
-    "style/index.js"
+    "style/**/*.{css,.js,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "style": "style/index.css",
   "repository": {
     "type": "git",
-    "url": "https://github.com/QuantStack/jupyterlab-js-logs.git"
+    "url": "https://github.com/QuantStack/jupyterlab-js-logs.git.git"
   },
   "scripts": {
     "build": "jlpm run build:lib && jlpm run build:labextension:dev",
+    "build:prod": "jlpm run clean && jlpm run build:lib && jlpm run build:labextension",
     "build:labextension": "jupyter labextension build .",
     "build:labextension:dev": "jupyter labextension build --development True .",
     "build:lib": "tsc",
-    "build:prod": "jlpm run clean && jlpm run build:lib && jlpm run build:labextension",
     "clean": "jlpm run clean:lib",
-    "clean:all": "jlpm run clean:lib && jlpm run clean:labextension",
-    "clean:labextension": "rimraf jupyterlab-js-logs/labextension",
     "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
+    "clean:labextension": "rimraf jupyterlab-js-logs/labextension",
+    "clean:all": "jlpm run clean:lib && jlpm run clean:labextension",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
     "install:extension": "jlpm run build",
-    "prepare": "jlpm run clean && jlpm run build",
     "watch": "run-p watch:src watch:labextension",
-    "watch:labextension": "jupyter labextension watch .",
-    "watch:src": "tsc -w"
+    "watch:src": "tsc -w",
+    "watch:labextension": "jupyter labextension watch ."
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.0.9",
-    "@jupyterlab/apputils": "^3.0.7",
-    "@jupyterlab/coreutils": "^5.0.5",
-    "@jupyterlab/logconsole": "^3.0.8",
-    "@jupyterlab/mainmenu": "^3.0.7",
-    "@jupyterlab/nbformat": "^3.0.5",
-    "@jupyterlab/rendermime": "^3.0.8",
-    "@jupyterlab/ui-components": "^3.0.6",
-    "@lumino/coreutils": "^1.5.3",
-    "@lumino/widgets": "^1.16.1"
+    "@jupyterlab/application": "^3.0.0"
   },
   "devDependencies": {
     "@jupyterlab/builder": "^3.0.0",
@@ -61,7 +53,7 @@
     "@typescript-eslint/parser": "^4.8.1",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-prettier": "^3.1.4", 
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.1",
     "rimraf": "^3.0.2",
@@ -71,9 +63,9 @@
     "style/*.css",
     "style/index.js"
   ],
-  "jupyterlab": {
+  "styleModule": "style/index.js",
+  "jupyterlab": { 
     "extension": true,
     "outputDir": "jupyterlab-js-logs/labextension"
-  },
-  "styleModule": "style/index.js"
+  }
 }
