@@ -21,8 +21,6 @@ jobs:
       with:
         python-version: '3.7'
         architecture: 'x64'
-    {# Escape double curly brace #}
-    {% raw %}
     - name: Setup pip cache
       uses: actions/cache@v2
       with:
@@ -42,7 +40,6 @@ jobs:
         key: yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           yarn-
-    {% endraw %}
 
     - name: Install dependencies
       run: python -m pip install jupyterlab
