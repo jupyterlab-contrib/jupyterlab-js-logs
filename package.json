@@ -12,7 +12,10 @@
     "url": "https://github.com/QuantStack/jupyterlab-js-logs/issues"
   },
   "license": "BSD-3-Clause",
-  "author": "jupyterlab-js-logs contributors",
+  "author": {
+    "name": "jupyterlab-js-logs contributors",
+    "email": "jupyterlab-js-logs contributors_email"
+  },
   "files": [
     "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
     "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}",
