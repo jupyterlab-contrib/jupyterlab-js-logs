@@ -17,9 +17,9 @@ jobs:
       with:
        node-version: '14.x'
     - name: Install Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.7'
+        python-version: '3.8'
         architecture: 'x64'
     - name: Setup pip cache
       uses: actions/cache@v2
@@ -48,5 +48,4 @@ jobs:
         jlpm
         jlpm run eslint:check
         python -m pip install .
-        jupyter labextension install .
         python -m jupyterlab.browser_check
