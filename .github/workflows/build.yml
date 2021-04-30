@@ -47,7 +47,6 @@ jobs:
       run: |
         jlpm
         jlpm run eslint:check
-
+        python -m pip install .
         jupyter labextension install .
-
         python -m jupyterlab.browser_check
