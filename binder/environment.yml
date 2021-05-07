@@ -1,7 +1,21 @@
-name: jupyterlab-js-logs
+# a mybinder.org-ready environment for demoing jupyterlab-js-logs
+# this environment may also be used locally on Linux/MacOS/Windows, e.g.
+#
+#   conda env update --file binder/environment.yml
+#   conda activate jupyterlab-js-logs-demo
+#
+name: jupyterlab-js-logs-demo
+
 channels:
-- conda-forge
+  - conda-forge
+
 dependencies:
-- python
-- jupyterlab=2
-- nodejs
+  # runtime dependencies
+  - python >=3.8,<3.9.0a0
+  - jupyterlab >=3,<4.0.0a0
+  # labextension build dependencies
+  - nodejs >=14,<15
+  - pip
+  - wheel
+  # additional packages for demos
+  # - ipywidgets
