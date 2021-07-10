@@ -138,8 +138,8 @@ const extension: JupyterFrontEndPlugin<void> = {
     });
 
     commands.addCommand(CommandIDs.open, {
-      label: 'Dev Tools Console Logs',
-      caption: 'Dev Tools Console Logs',
+      label: 'Show Dev Tools Console Logs',
+      caption: 'Show Dev Tools Console Logs',
       isToggled: () => logConsoleWidget !== null,
       execute: () => {
         if (logConsoleWidget) {
