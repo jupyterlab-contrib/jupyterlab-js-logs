@@ -34,7 +34,7 @@ The prebuilt extension is already packaged in the main Python package.
 
 However we also publish it to `npm` to:
 
-- let other third-party extensions depend on `JupyterLab-js-logs`
+- let other third-party extensions depend on `jupyterlab-js-logs`
 - let users install from source if they would like to
 
 ## Releasing on npm
