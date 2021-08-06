@@ -5,7 +5,7 @@
 Creating a new environment can help avoid pushing local changes and any extra tag.
 
 ```bash
-mamba create -q -y -n jlab-js-logs-release -c conda-forge twine nodejs keyring pip matplotlib jupyter-packaging jupyterlab
+mamba create -q -y -n jlab-js-logs-release -c conda-forge twine nodejs keyring pip jupyter-packaging jupyterlab=3.0
 conda activate jlab-js-logs-release
 ```
 
