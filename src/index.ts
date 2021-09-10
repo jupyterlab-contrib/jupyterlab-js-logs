@@ -174,23 +174,22 @@ const extension: JupyterFrontEndPlugin<void> = {
     let cache: any = [];
     const refReplacer = (key: any, value: any) => {
       if (typeof value === 'object' && value !== null) {
-          if (cache.indexOf(value) !== -1) {
-              return;
-          }
-          cache.push(value);
+        if (cache.indexOf(value) !== -1) {
+          return;
+        }
+        cache.push(value);
       }
       return value;
     };
-    
 
     window.console.debug = (...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
         try {
           data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg, refReplacer)
-            : arg) + ' ';
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg, refReplacer)
+              : arg) + ' ';
           cache = [];
         } catch (error) {
           data += ' ';
@@ -210,9 +209,9 @@ const extension: JupyterFrontEndPlugin<void> = {
       args.forEach(arg => {
         try {
           data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg, refReplacer)
-            : arg) + ' ';
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg, refReplacer)
+              : arg) + ' ';
           cache = [];
         } catch (error) {
           data += ' ';
@@ -232,9 +231,9 @@ const extension: JupyterFrontEndPlugin<void> = {
       args.forEach(arg => {
         try {
           data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg, refReplacer)
-            : arg) + ' ';
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg, refReplacer)
+              : arg) + ' ';
           cache = [];
         } catch (error) {
           data += ' ';
@@ -254,9 +253,9 @@ const extension: JupyterFrontEndPlugin<void> = {
       args.forEach(arg => {
         try {
           data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg, refReplacer)
-            : arg) + ' ';
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg, refReplacer)
+              : arg) + ' ';
           cache = [];
         } catch (error) {
           data += ' ';
@@ -276,9 +275,9 @@ const extension: JupyterFrontEndPlugin<void> = {
       args.forEach(arg => {
         try {
           data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg, refReplacer)
-            : arg) + ' ';
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg, refReplacer)
+              : arg) + ' ';
           cache = [];
         } catch (error) {
           data += ' ';
@@ -298,9 +297,9 @@ const extension: JupyterFrontEndPlugin<void> = {
       args.forEach(arg => {
         try {
           data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg, refReplacer)
-            : arg) + ' ';
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg, refReplacer)
+              : arg) + ' ';
           cache = [];
         } catch (error) {
           data += ' ';
@@ -320,9 +319,9 @@ const extension: JupyterFrontEndPlugin<void> = {
       args.forEach(arg => {
         try {
           data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg, refReplacer)
-            : arg) + ' ';
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg, refReplacer)
+              : arg) + ' ';
           cache = [];
         } catch (error) {
           data += ' ';
@@ -342,9 +341,9 @@ const extension: JupyterFrontEndPlugin<void> = {
       args.forEach(arg => {
         try {
           data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg, refReplacer)
-            : arg) + ' ';
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg, refReplacer)
+              : arg) + ' ';
           cache = [];
         } catch (error) {
           data += ' ';
