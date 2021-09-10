@@ -169,13 +169,32 @@ const extension: JupyterFrontEndPlugin<void> = {
     const _trace = console.trace;
     const _table = console.table;
 
+    // https://stackoverflow.com/a/11616993
+    // We need to clear cache after each use.
+    let cache: any = [];
+    const refReplacer = (key: any, value: any) => {
+      if (typeof value === 'object' && value !== null) {
+          if (cache.indexOf(value) !== -1) {
+              return;
+          }
+          cache.push(value);
+      }
+      return value;
+    };
+    
+
     window.console.debug = (...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
-        data +=
+        try {
+          data +=
           (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
+            ? JSON.stringify(arg, refReplacer)
             : arg) + ' ';
+          cache = [];
+        } catch (error) {
+          data += ' ';
+        }
       });
 
       logConsolePanel?.logger?.log({
@@ -189,10 +208,15 @@ const extension: JupyterFrontEndPlugin<void> = {
     window.console.log = (...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
-        data +=
+        try {
+          data +=
           (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
+            ? JSON.stringify(arg, refReplacer)
             : arg) + ' ';
+          cache = [];
+        } catch (error) {
+          data += ' ';
+        }
       });
 
       logConsolePanel?.logger?.log({
@@ -206,10 +230,15 @@ const extension: JupyterFrontEndPlugin<void> = {
     window.console.info = (...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
-        data +=
+        try {
+          data +=
           (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
+            ? JSON.stringify(arg, refReplacer)
             : arg) + ' ';
+          cache = [];
+        } catch (error) {
+          data += ' ';
+        }
       });
 
       logConsolePanel?.logger?.log({
@@ -223,10 +252,15 @@ const extension: JupyterFrontEndPlugin<void> = {
     window.console.warn = (...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
-        data +=
+        try {
+          data +=
           (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
+            ? JSON.stringify(arg, refReplacer)
             : arg) + ' ';
+          cache = [];
+        } catch (error) {
+          data += ' ';
+        }
       });
 
       logConsolePanel?.logger?.log({
@@ -240,10 +274,15 @@ const extension: JupyterFrontEndPlugin<void> = {
     window.console.error = (...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
-        data +=
+        try {
+          data +=
           (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
+            ? JSON.stringify(arg, refReplacer)
             : arg) + ' ';
+          cache = [];
+        } catch (error) {
+          data += ' ';
+        }
       });
 
       logConsolePanel?.logger?.log({
@@ -257,10 +296,15 @@ const extension: JupyterFrontEndPlugin<void> = {
     window.console.exception = (message?: string, ...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
-        data +=
+        try {
+          data +=
           (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
+            ? JSON.stringify(arg, refReplacer)
             : arg) + ' ';
+          cache = [];
+        } catch (error) {
+          data += ' ';
+        }
       });
 
       logConsolePanel?.logger?.log({
@@ -274,10 +318,15 @@ const extension: JupyterFrontEndPlugin<void> = {
     window.console.trace = (...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
-        data +=
+        try {
+          data +=
           (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
+            ? JSON.stringify(arg, refReplacer)
             : arg) + ' ';
+          cache = [];
+        } catch (error) {
+          data += ' ';
+        }
       });
 
       logConsolePanel?.logger?.log({
@@ -291,10 +340,15 @@ const extension: JupyterFrontEndPlugin<void> = {
     window.console.table = (...args: any[]): void => {
       let data = '';
       args.forEach(arg => {
-        data +=
+        try {
+          data +=
           (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
+            ? JSON.stringify(arg, refReplacer)
             : arg) + ' ';
+          cache = [];
+        } catch (error) {
+          data += ' ';
+        }
       });
 
       logConsolePanel?.logger?.log({
