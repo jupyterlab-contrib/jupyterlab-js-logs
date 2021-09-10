@@ -24,6 +24,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "style": "style/index.css",
+  "styleModule": "style/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/QuantStack/jupyterlab-js-logs.git"
@@ -78,5 +79,12 @@
     "extension": true,
     "outputDir": "jupyterlab-js-logs/labextension"
   },
-  "styleModule": "style/index.js"
+  "jupyter-releaser": {
+    "hooks": {
+      "before-build-npm": [
+        "python -m pip install jupyterlab~=3.0",
+        "jlpm"
+      ]
+    }
+  }
 }
