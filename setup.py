@@ -9,7 +9,7 @@ import setuptools
 HERE = Path(__file__).parent.resolve()
 
 # The name of the project
-name = "jupyterlab-js-logs"
+name = "jupyterlab_js_logs"
 
 lab_path = (HERE / name / "labextension")
 
