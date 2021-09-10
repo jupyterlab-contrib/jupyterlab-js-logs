@@ -113,3 +113,6 @@ dmypy.json
 
 # _temp_extesnion
 _temp_extension/
+
+# IDE files
+.vscode
