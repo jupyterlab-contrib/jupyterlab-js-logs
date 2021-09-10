@@ -188,11 +188,19 @@ const extension: JupyterFrontEndPlugin<void> = {
         try {
           data +=
             (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg, refReplacer)
+              ? JSON.stringify(arg)
               : arg) + ' ';
-          cache = [];
-        } catch (error) {
-          data += ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
         }
       });
 
@@ -210,11 +218,19 @@ const extension: JupyterFrontEndPlugin<void> = {
         try {
           data +=
             (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg, refReplacer)
+              ? JSON.stringify(arg)
               : arg) + ' ';
-          cache = [];
-        } catch (error) {
-          data += ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
         }
       });
 
@@ -232,11 +248,19 @@ const extension: JupyterFrontEndPlugin<void> = {
         try {
           data +=
             (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg, refReplacer)
+              ? JSON.stringify(arg)
               : arg) + ' ';
-          cache = [];
-        } catch (error) {
-          data += ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
         }
       });
 
@@ -254,11 +278,19 @@ const extension: JupyterFrontEndPlugin<void> = {
         try {
           data +=
             (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg, refReplacer)
+              ? JSON.stringify(arg)
               : arg) + ' ';
-          cache = [];
-        } catch (error) {
-          data += ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
         }
       });
 
@@ -276,11 +308,19 @@ const extension: JupyterFrontEndPlugin<void> = {
         try {
           data +=
             (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg, refReplacer)
+              ? JSON.stringify(arg)
               : arg) + ' ';
-          cache = [];
-        } catch (error) {
-          data += ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
         }
       });
 
@@ -298,11 +338,19 @@ const extension: JupyterFrontEndPlugin<void> = {
         try {
           data +=
             (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg, refReplacer)
+              ? JSON.stringify(arg)
               : arg) + ' ';
-          cache = [];
-        } catch (error) {
-          data += ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
         }
       });
 
@@ -320,11 +368,19 @@ const extension: JupyterFrontEndPlugin<void> = {
         try {
           data +=
             (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg, refReplacer)
+              ? JSON.stringify(arg)
               : arg) + ' ';
-          cache = [];
-        } catch (error) {
-          data += ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
         }
       });
 
@@ -342,11 +398,19 @@ const extension: JupyterFrontEndPlugin<void> = {
         try {
           data +=
             (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg, refReplacer)
+              ? JSON.stringify(arg)
               : arg) + ' ';
-          cache = [];
-        } catch (error) {
-          data += ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
         }
       });
 
