@@ -1,6 +1,14 @@
 # Making a new release of JupyterLab-js-logs
 
-## Getting a clean environment
+## Automated releases with `jupyter_releaser`
+
+The recommended way to make a release is to use [`jupyter_releaser`](https://github.com/jupyter-server/jupyter_releaser#checklist-for-adoption).
+
+---
+
+Below are the instructions to make releases manually. They are kept here as reference and might be removed at some point in the future.
+
+### Getting a clean environment
 
 Creating a new environment can help avoid pushing local changes and any extra tag.
 
@@ -15,7 +23,7 @@ Alternatively, the local repository can be cleaned with:
 git clean -fdx
 ```
 
-## Releasing on PyPI
+### Releasing on PyPI
 
 Make sure the `dist/` folder is empty.
 
@@ -28,7 +36,7 @@ Make sure the `dist/` folder is empty.
 7. `export TWINE_USERNAME=mypypi_username`
 8. `twine upload dist/*`
 
-# Making a new release of JupyterLab-js-logs
+## Making a new release of JupyterLab-js-logs
 
 The prebuilt extension is already packaged in the main Python package.
 
@@ -37,13 +45,13 @@ However we also publish it to `npm` to:
 - let other third-party extensions depend on `jupyterlab-js-logs`
 - let users install from source if they would like to
 
-## Releasing on npm
+### Releasing on npm
 
 1. The version number in [./package.json](./package.json) should have been updated during the release step of the Python package (see above)
 2. `npm login`
 3. `npm publish`
 
-## Releasing on conda-forge
+### Releasing on conda-forge
 
 The simplest is to wait for the bot to automatically open the PR.
 
@@ -55,7 +63,7 @@ Alternatively, to do the update manually:
 
 The new version will be available on `conda-forge` soon after.
 
-## Committing and tagging
+### Committing and tagging
 
 Commit the changes, create a new release tag, and update the `stable` branch (for Binder), where `x.y.z` denotes the new version:
 
