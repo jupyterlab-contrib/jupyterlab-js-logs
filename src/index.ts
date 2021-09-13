@@ -169,138 +169,111 @@ const extension: JupyterFrontEndPlugin<void> = {
     const _trace = console.trace;
     const _table = console.table;
 
-    window.console.debug = (...args: any[]): void => {
+    // https://stackoverflow.com/a/11616993
+    // We need to clear cache after each use.
+    let cache: any = [];
+    const refReplacer = (key: any, value: any) => {
+      if (typeof value === 'object' && value !== null) {
+        if (cache.indexOf(value) !== -1) {
+          return;
+        }
+        cache.push(value);
+      }
+      return value;
+    };
+
+    const parseArgs = (args: any[]): string => {
       let data = '';
       args.forEach(arg => {
-        data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
-            : arg) + ' ';
+        try {
+          data +=
+            (typeof arg === 'object' && arg !== null
+              ? JSON.stringify(arg)
+              : arg) + ' ';
+        } catch (e) {
+          try {
+            const msg =
+              'This error contains a object with a circular reference. Duplicated attributes might have been dropped during the process of removing the reference.\n';
+            const obj = JSON.stringify(arg, refReplacer);
+            cache = [];
+            console.error(msg, obj);
+            data += obj;
+          } catch (e) {
+            data += ' ';
+          }
+        }
       });
+      return data;
+    };
 
+    window.console.debug = (...args: any[]): void => {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
-        data
+        data: parseArgs(args)
       });
       _debug(...args);
     };
 
     window.console.log = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
-            : arg) + ' ';
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
-        data
+        data: parseArgs(args)
       });
       _log(...args);
     };
 
     window.console.info = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
-            : arg) + ' ';
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data
+        data: parseArgs(args)
       });
       _info(...args);
     };
 
     window.console.warn = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
-            : arg) + ' ';
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'warning',
-        data
+        data: parseArgs(args)
       });
       _warn(...args);
     };
 
     window.console.error = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
-            : arg) + ' ';
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
-        data
+        data: parseArgs(args)
       });
       _error(...args);
     };
 
     window.console.exception = (message?: string, ...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
-            : arg) + ' ';
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
-        data: `Exception: ${message}\n${data}`
+        data: `Exception: ${message}\n${parseArgs(args)}`
       });
       _exception(...args);
     };
 
     window.console.trace = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
-            : arg) + ' ';
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data
+        data: parseArgs(args)
       });
       _trace(...args);
     };
 
     window.console.table = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        data +=
-          (typeof arg === 'object' && arg !== null
-            ? JSON.stringify(arg)
-            : arg) + ' ';
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data
+        data: parseArgs(args)
       });
       _table(...args);
     };
