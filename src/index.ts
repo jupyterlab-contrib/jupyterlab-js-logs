@@ -193,7 +193,7 @@ const extension: JupyterFrontEndPlugin<void> = {
         } catch (e) {
           try {
             const msg =
-              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
+              'This error contains a object with a circular reference. Duplicated attributes might have been dropped during the process of removing the reference.\n';
             const obj = JSON.stringify(arg, refReplacer);
             cache = [];
             console.error(msg, obj);
