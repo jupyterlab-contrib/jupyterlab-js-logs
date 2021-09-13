@@ -182,7 +182,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       return value;
     };
 
-    window.console.debug = (...args: any[]): void => {
+    const parseArgs = (args: any[]): string => {
       let data = '';
       args.forEach(arg => {
         try {
@@ -203,221 +203,77 @@ const extension: JupyterFrontEndPlugin<void> = {
           }
         }
       });
+      return data;
+    };
 
+    window.console.debug = (...args: any[]): void => {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
-        data
+        data: parseArgs(args)
       });
       _debug(...args);
     };
 
     window.console.log = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
-        } catch (e) {
-          try {
-            const msg =
-              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
-            const obj = JSON.stringify(arg, refReplacer);
-            cache = [];
-            console.error(msg, obj);
-            data += obj;
-          } catch (e) {
-            data += ' ';
-          }
-        }
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
-        data
+        data: parseArgs(args)
       });
       _log(...args);
     };
 
     window.console.info = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
-        } catch (e) {
-          try {
-            const msg =
-              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
-            const obj = JSON.stringify(arg, refReplacer);
-            cache = [];
-            console.error(msg, obj);
-            data += obj;
-          } catch (e) {
-            data += ' ';
-          }
-        }
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data
+        data: parseArgs(args)
       });
       _info(...args);
     };
 
     window.console.warn = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
-        } catch (e) {
-          try {
-            const msg =
-              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
-            const obj = JSON.stringify(arg, refReplacer);
-            cache = [];
-            console.error(msg, obj);
-            data += obj;
-          } catch (e) {
-            data += ' ';
-          }
-        }
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'warning',
-        data
+        data: parseArgs(args)
       });
       _warn(...args);
     };
 
     window.console.error = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
-        } catch (e) {
-          try {
-            const msg =
-              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
-            const obj = JSON.stringify(arg, refReplacer);
-            cache = [];
-            console.error(msg, obj);
-            data += obj;
-          } catch (e) {
-            data += ' ';
-          }
-        }
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
-        data
+        data: parseArgs(args)
       });
       _error(...args);
     };
 
     window.console.exception = (message?: string, ...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
-        } catch (e) {
-          try {
-            const msg =
-              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
-            const obj = JSON.stringify(arg, refReplacer);
-            cache = [];
-            console.error(msg, obj);
-            data += obj;
-          } catch (e) {
-            data += ' ';
-          }
-        }
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
-        data: `Exception: ${message}\n${data}`
+        data: `Exception: ${message}\n${parseArgs(args)}`
       });
       _exception(...args);
     };
 
     window.console.trace = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
-        } catch (e) {
-          try {
-            const msg =
-              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
-            const obj = JSON.stringify(arg, refReplacer);
-            cache = [];
-            console.error(msg, obj);
-            data += obj;
-          } catch (e) {
-            data += ' ';
-          }
-        }
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data
+        data: parseArgs(args)
       });
       _trace(...args);
     };
 
     window.console.table = (...args: any[]): void => {
-      let data = '';
-      args.forEach(arg => {
-        try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
-        } catch (e) {
-          try {
-            const msg =
-              'This error contains a object with a circular reference. During the process of removing the reference we could have removed duplicated attributes.\n';
-            const obj = JSON.stringify(arg, refReplacer);
-            cache = [];
-            console.error(msg, obj);
-            data += obj;
-          } catch (e) {
-            data += ' ';
-          }
-        }
-      });
-
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data
+        data: parseArgs(args)
       });
       _table(...args);
     };
