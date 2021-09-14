@@ -1,7 +1,7 @@
 # jupyterlab-js-logs
 
 ![Github Actions Status](https://github.com/QuantStack/jupyterlab-js-logs/workflows/Build/badge.svg)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/QuantStack/jupyterlab-js-logs/master?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/QuantStack/jupyterlab-js-logs/main?urlpath=lab)
 
 JupyterLab extension to show the js logs from the browser dev tools console
 
