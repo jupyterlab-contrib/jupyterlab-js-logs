@@ -1,5 +1,5 @@
 include LICENSE
-include README.md
+include *.md
 include pyproject.toml
 include jupyter-config/jupyterlab-js-logs.json
 
@@ -8,7 +8,7 @@ include install.json
 include ts*.json
 include yarn.lock
 
-graft jupyterlab-js-logs/labextension
+graft jupyterlab_js_logs/labextension
 
 # Javascript files
 graft src

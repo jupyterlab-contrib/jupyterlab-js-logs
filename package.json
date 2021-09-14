@@ -24,6 +24,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "style": "style/index.css",
+  "styleModule": "style/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/QuantStack/jupyterlab-js-logs.git"
@@ -36,7 +37,7 @@
     "build:prod": "jlpm run clean && jlpm run build:lib && jlpm run build:labextension",
     "clean": "jlpm run clean:lib",
     "clean:all": "jlpm run clean:lib && jlpm run clean:labextension",
-    "clean:labextension": "rimraf jupyterlab-js-logs/labextension",
+    "clean:labextension": "rimraf jupyterlab_js_logs/labextension",
     "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
@@ -76,7 +77,14 @@
   ],
   "jupyterlab": {
     "extension": true,
-    "outputDir": "jupyterlab-js-logs/labextension"
+    "outputDir": "jupyterlab_js_logs/labextension"
   },
-  "styleModule": "style/index.js"
+  "jupyter-releaser": {
+    "hooks": {
+      "before-build-npm": [
+        "python -m pip install jupyterlab~=3.0",
+        "jlpm"
+      ]
+    }
+  }
 }

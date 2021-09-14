@@ -19,7 +19,7 @@ jupyter labextension install jupyterlab-js-logs
 
 ## Contributing
 
-This extension was bootstrapped from the [custom-log-console](https://github.com/jupyterlab/extension-examples/tree/master/log-console/custom-log-console) example contributed by [Carlos Herrero](https://github.com/hbcarlos), from the [`jupyterlab-extension-examples`](https://github.com/jupyterlab/extension-examples) repository.
+This extension was bootstrapped from the [custom-log-console](https://github.com/jupyterlab/extension-examples/tree/master/custom-log-console) example contributed by [Carlos Herrero](https://github.com/hbcarlos), from the [`jupyterlab-extension-examples`](https://github.com/jupyterlab/extension-examples) repository.
 
 
 ### Install
