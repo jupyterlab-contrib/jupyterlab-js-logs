@@ -2,6 +2,18 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.2.5
+
+([Full Changelog](https://github.com/QuantStack/jupyterlab-js-logs/compare/v0.2.4...None))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/QuantStack/jupyterlab-js-logs/graphs/contributors?from=2021-09-15&to=2022-01-18&type=c))
+
+[@hbcarlos](https://github.com/search?q=repo%3AQuantStack%2Fjupyterlab-js-logs+involves%3Ahbcarlos+updated%3A2021-09-15..2022-01-18&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.4
 
 ([Full Changelog](https://github.com/QuantStack/jupyterlab-js-logs/compare/v0.2.3...62cef996ed0c8434147907aa3a8bdb7bf6ffc9a6))
@@ -19,8 +31,6 @@
 ([GitHub contributors page for this release](https://github.com/QuantStack/jupyterlab-js-logs/graphs/contributors?from=2021-09-14&to=2021-09-15&type=c))
 
 [@jtpio](https://github.com/search?q=repo%3AQuantStack%2Fjupyterlab-js-logs+involves%3Ajtpio+updated%3A2021-09-14..2021-09-15&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.3
 
