@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab-js-logs",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "JupyterLab extension to show the js logs from the browser dev tools console",
   "keywords": [
     "jupyter",
