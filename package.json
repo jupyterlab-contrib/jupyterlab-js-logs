@@ -83,6 +83,9 @@
       "before-build-npm": [
         "python -m pip install jupyterlab~=3.0",
         "jlpm"
+      ],
+      "before-build-python": [
+        "jlpm clean"
       ]
     }
   },
