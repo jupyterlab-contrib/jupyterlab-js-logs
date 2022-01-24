@@ -85,7 +85,7 @@
         "jlpm"
       ],
       "before-build-python": [
-        "jlpm clean"
+        "jlpm clean:all"
       ]
     }
   },
