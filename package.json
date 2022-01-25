@@ -41,7 +41,7 @@
     "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
-    "prepare": "jlpm run clean && jlpm run build",
+    "install:extension": "jlpm run build",
     "watch": "run-p watch:src watch:labextension",
     "watch:labextension": "jupyter labextension watch .",
     "watch:src": "tsc -w"
@@ -83,6 +83,9 @@
       "before-build-npm": [
         "python -m pip install jupyterlab~=3.0",
         "jlpm"
+      ],
+      "before-build-python": [
+        "jlpm clean:all"
       ]
     }
   },
