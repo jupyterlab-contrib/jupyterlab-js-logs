@@ -2,6 +2,32 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.2.6
+
+([Full Changelog](https://github.com/QuantStack/jupyterlab-js-logs/compare/v0.2.5...854af201b8186f50ce781096fc46ccec758adce0))
+
+### Enhancements made
+
+- Improve Check Release workflow [#23](https://github.com/QuantStack/jupyterlab-js-logs/pull/23) ([@hbcarlos](https://github.com/hbcarlos))
+
+### Bugs fixed
+
+- Remove prepare script and revert PR #20 [#24](https://github.com/QuantStack/jupyterlab-js-logs/pull/24) ([@hbcarlos](https://github.com/hbcarlos))
+
+### Maintenance and upkeep improvements
+
+- Upload artifacts only on Check Release [#25](https://github.com/QuantStack/jupyterlab-js-logs/pull/25) ([@hbcarlos](https://github.com/hbcarlos))
+- Remove prepare script and revert PR #20 [#24](https://github.com/QuantStack/jupyterlab-js-logs/pull/24) ([@hbcarlos](https://github.com/hbcarlos))
+- Improve Check Release workflow [#23](https://github.com/QuantStack/jupyterlab-js-logs/pull/23) ([@hbcarlos](https://github.com/hbcarlos))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/QuantStack/jupyterlab-js-logs/graphs/contributors?from=2022-01-21&to=2022-01-25&type=c))
+
+[@hbcarlos](https://github.com/search?q=repo%3AQuantStack%2Fjupyterlab-js-logs+involves%3Ahbcarlos+updated%3A2022-01-21..2022-01-25&type=Issues) | [@jtpio](https://github.com/search?q=repo%3AQuantStack%2Fjupyterlab-js-logs+involves%3Ajtpio+updated%3A2022-01-21..2022-01-25&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.5
 
 ([Full Changelog](https://github.com/QuantStack/jupyterlab-js-logs/compare/v0.2.4...2b893318a9ee85a3c649fcb92f1ded9ba732a00d))
@@ -15,8 +41,6 @@
 ([GitHub contributors page for this release](https://github.com/QuantStack/jupyterlab-js-logs/graphs/contributors?from=2021-09-15&to=2022-01-21&type=c))
 
 [@hbcarlos](https://github.com/search?q=repo%3AQuantStack%2Fjupyterlab-js-logs+involves%3Ahbcarlos+updated%3A2021-09-15..2022-01-21&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.4
 
