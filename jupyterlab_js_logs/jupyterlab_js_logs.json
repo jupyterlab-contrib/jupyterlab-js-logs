@@ -1,0 +1,12 @@
+{
+  "ServerApp": {
+    "jpserver_extensions": {
+      "jupyterlab_js_logs": true
+    }
+  },
+  "NotebookApp": {
+    "nbserver_extensions": {
+      "jupyterlab_js_logs": true
+    }
+  }
+}

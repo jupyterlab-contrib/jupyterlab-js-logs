@@ -17,7 +17,11 @@ import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
 import { addIcon, clearIcon, LabIcon } from '@jupyterlab/ui-components';
 
+import { UUID } from '@lumino/coreutils';
+
 import LogLevelSwitcher from './logLevelSwitcher';
+
+import { LoggerWS } from './logger';
 
 import jsIconStr from '../style/js.svg';
 
@@ -50,6 +54,8 @@ const extension: JupyterFrontEndPlugin<void> = {
   ) => {
     const { commands } = app;
 
+    // TODO: use user ID
+    const logger = new LoggerWS(UUID.uuid4());
     let logConsolePanel: LogConsolePanel = null;
     let logConsoleWidget: MainAreaWidget<LogConsolePanel> = null;
 
@@ -207,74 +213,90 @@ const extension: JupyterFrontEndPlugin<void> = {
     };
 
     window.console.debug = (...args: any[]): void => {
+      const data = parseArgs(args);
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
-        data: parseArgs(args)
+        data
       });
+      logger.write('[DEBUG]: ' + data);
       _debug(...args);
     };
 
     window.console.log = (...args: any[]): void => {
+      const data = parseArgs(args);
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'debug',
-        data: parseArgs(args)
+        data
       });
+      logger.write('[LOG]: ' + data);
       _log(...args);
     };
 
     window.console.info = (...args: any[]): void => {
+      const data = parseArgs(args);
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data: parseArgs(args)
+        data
       });
+      logger.write('[INFO]: ' + data);
       _info(...args);
     };
 
     window.console.warn = (...args: any[]): void => {
+      const data = parseArgs(args);
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'warning',
-        data: parseArgs(args)
+        data
       });
+      logger.write('[WARN]: ' + data);
       _warn(...args);
     };
 
     window.console.error = (...args: any[]): void => {
+      const data = parseArgs(args);
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
-        data: parseArgs(args)
+        data
       });
+      logger.write('[ERROR]: ' + data);
       _error(...args);
     };
 
     window.console.exception = (message?: string, ...args: any[]): void => {
+      const data = `Exception: ${message}\n${parseArgs(args)}`;
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
-        data: `Exception: ${message}\n${parseArgs(args)}`
+        data
       });
+      logger.write('[EXCEPTION]: ' + data);
       _exception(...args);
     };
 
     window.console.trace = (...args: any[]): void => {
+      const data = parseArgs(args);
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data: parseArgs(args)
+        data
       });
+      logger.write('[TRACE]: ' + data);
       _trace(...args);
     };
 
     window.console.table = (...args: any[]): void => {
+      const data = parseArgs(args);
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'info',
-        data: parseArgs(args)
+        data
       });
+      logger.write('[TABLE]: ' + data);
       _table(...args);
     };
 
