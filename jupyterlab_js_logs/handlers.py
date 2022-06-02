@@ -19,9 +19,11 @@ def setup_handlers(web_app):
 class Logger(WebSocketHandler, JupyterHandler):
     clients = {}
 
-    def open(self, id = str(uuid.uuid4())):
+    def open(self, id = None):
         #print("[LOGGER] open:", id)
         cls = self.__class__
+        if id == None :
+            id = self.get_current_user()
         self.id = 'logger/{}.txt'.format(id)
 
         if self.contents_manager.file_exists(self.id) :

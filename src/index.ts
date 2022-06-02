@@ -55,7 +55,9 @@ const extension: JupyterFrontEndPlugin<void> = {
     const { commands } = app;
 
     // TODO: use user ID
-    const logger = new LoggerWS(UUID.uuid4());
+    const id = window.localStorage.getItem('user_id') || UUID.uuid4();
+    window.localStorage.setItem('user_id', id);
+    const logger = new LoggerWS(id);
     let logConsolePanel: LogConsolePanel = null;
     let logConsoleWidget: MainAreaWidget<LogConsolePanel> = null;
 
