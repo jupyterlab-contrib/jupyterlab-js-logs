@@ -25,6 +25,9 @@ labext_name = "jupyterlab-js-logs"
 data_files_spec = [
     ("share/jupyter/labextensions/%s" % labext_name, str(lab_path), "**"),
     ("share/jupyter/labextensions/%s" % labext_name, str(HERE), "install.json"),
+    ("etc/jupyter/jupyter_server_config.d", "jupyterlab_js_logs", "jupyterlab_js_logs.json"),
+    # For backward compatibility with notebook server
+    ("etc/jupyter/jupyter_notebook_config.d", "jupyterlab_js_logs", "jupyterlab_js_logs.json")
 ]
 
 long_description = (HERE / "README.md").read_text()
@@ -43,7 +46,9 @@ setup_args = dict(
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
-    install_requires=[],
+    install_requires=[
+        "jupyter_server>=1.6,<2"
+    ],
     zip_safe=False,
     include_package_data=True,
     python_requires=">=3.6",

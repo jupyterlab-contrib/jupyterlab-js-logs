@@ -37,7 +37,9 @@ jlpm
 # Build Typescript source
 jlpm build
 # Link your development version of the extension with JupyterLab
-jupyter labextension install .
+jupyter labextension develop . --overwrite
+# Install the server extension
+jupyter server extension enable jupyterlab_js_logs
 # Rebuild Typescript source after making changes
 jlpm build
 # Rebuild JupyterLab after making any changes
