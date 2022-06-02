@@ -10,7 +10,7 @@ def setup_handlers(web_app):
     base_url = web_app.settings["base_url"]
 
     # Prepend the base_url so that it works in a jupyterhub setting
-    route_logger = url_path_join(base_url, "logger")
+    route_logger = url_path_join(base_url, "logger/(.*)")
     handlers = [(route_logger, Logger)]
     
     web_app.add_handlers(host_pattern, handlers)
@@ -20,7 +20,7 @@ class Logger(WebSocketHandler, JupyterHandler):
     clients = {}
 
     def open(self, id = str(uuid.uuid4())):
-        print("[LOGGER] open:", id)
+        #print("[LOGGER] open:", id)
         cls = self.__class__
         self.id = 'logger/{}.txt'.format(id)
 
@@ -33,9 +33,7 @@ class Logger(WebSocketHandler, JupyterHandler):
         else :
             self.contents_manager.new({"type": "directory"}, 'logger')
             model = self.contents_manager.new({"type": "file", "format": "text"}, self.id)
-
-            
-        #print("Model:", model)
+        
         content = model.get('content', "") or ""
         content = content.split('\n')
         cls.clients[self.id] = content
@@ -59,5 +57,5 @@ class Logger(WebSocketHandler, JupyterHandler):
         cls.clients.pop(self.id)
     
     def check_origin(self, origin):
-        #print("[LOGGER] check origin")
+        #print("[LOGGER] check origin", origin)
         return True

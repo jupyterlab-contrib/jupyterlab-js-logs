@@ -2,13 +2,13 @@ import { ServerConnection } from '@jupyterlab/services';
 import { URLExt } from '@jupyterlab/coreutils';
 
 export class LoggerWS {
-  //private _id: string;
+  private _id: string;
   private _ws: WebSocket;
   private _msgs: string[];
   private _isReady: boolean;
 
   constructor(clientID: string) {
-    //this._id = clientID;
+    this._id = clientID;
     this._msgs = [];
     this._isReady = false;
     this._connect();
@@ -31,7 +31,7 @@ export class LoggerWS {
 
   private _connect(): void {
     const server = ServerConnection.makeSettings();
-    this._ws = new WebSocket(URLExt.join(server.wsUrl, 'logger'));
+    this._ws = new WebSocket(URLExt.join(server.wsUrl, 'logger', this._id));
     this._ws.onopen = this._onConection;
     this._ws.onerror = this._onError;
     this._ws.onclose = this._onClose;
