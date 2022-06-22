@@ -11,7 +11,11 @@ import {
   CommandToolbarButton
 } from '@jupyterlab/apputils';
 
-import { LoggerRegistry, LogConsolePanel } from '@jupyterlab/logconsole';
+import {
+  LoggerRegistry,
+  LogConsolePanel,
+  ILogPayload
+} from '@jupyterlab/logconsole';
 
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
@@ -50,6 +54,8 @@ const extension: JupyterFrontEndPlugin<void> = {
   ) => {
     const { commands } = app;
 
+    // Keep the LogConsolePanel as a global variable
+    // to use it from outside the activate function.
     let logConsolePanel: LogConsolePanel = null;
     let logConsoleWidget: MainAreaWidget<LogConsolePanel> = null;
 
@@ -101,6 +107,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       );
 
       logConsoleWidget.disposed.connect(() => {
+        Private.logger = null;
         logConsoleWidget = null;
         logConsolePanel = null;
         commands.notifyCommandChanged();
@@ -111,6 +118,14 @@ const extension: JupyterFrontEndPlugin<void> = {
 
       logConsoleWidget.update();
       commands.notifyCommandChanged();
+
+      Private.logger = (msg: ILogPayload) => {
+        logConsolePanel?.logger?.log(msg);
+      };
+
+      while (Private.MESSAGES.length > 0) {
+        Private.log(Private.MESSAGES.shift());
+      }
     };
 
     commands.addCommand(CommandIDs.checkpoint, {
@@ -150,134 +165,6 @@ const extension: JupyterFrontEndPlugin<void> = {
       }
     });
 
-    window.onerror = (msg, url, lineNo, columnNo, error): boolean => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'critical',
-        data: `${url}:${lineNo} ${msg}\n${error}`
-      });
-      return false;
-    };
-
-    const _debug = console.debug;
-    const _log = console.log;
-    const _info = console.info;
-    const _warn = console.warn;
-    const _error = console.error;
-
-    const _exception = console.exception;
-    const _trace = console.trace;
-    const _table = console.table;
-
-    // https://stackoverflow.com/a/11616993
-    // We need to clear cache after each use.
-    let cache: any = [];
-    const refReplacer = (key: any, value: any) => {
-      if (typeof value === 'object' && value !== null) {
-        if (cache.indexOf(value) !== -1) {
-          return;
-        }
-        cache.push(value);
-      }
-      return value;
-    };
-
-    const parseArgs = (args: any[]): string => {
-      let data = '';
-      args.forEach(arg => {
-        try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
-        } catch (e) {
-          try {
-            const msg =
-              'This error contains a object with a circular reference. Duplicated attributes might have been dropped during the process of removing the reference.\n';
-            const obj = JSON.stringify(arg, refReplacer);
-            cache = [];
-            console.error(msg, obj);
-            data += obj;
-          } catch (e) {
-            data += ' ';
-          }
-        }
-      });
-      return data;
-    };
-
-    window.console.debug = (...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'debug',
-        data: parseArgs(args)
-      });
-      _debug(...args);
-    };
-
-    window.console.log = (...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'debug',
-        data: parseArgs(args)
-      });
-      _log(...args);
-    };
-
-    window.console.info = (...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'info',
-        data: parseArgs(args)
-      });
-      _info(...args);
-    };
-
-    window.console.warn = (...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'warning',
-        data: parseArgs(args)
-      });
-      _warn(...args);
-    };
-
-    window.console.error = (...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'critical',
-        data: parseArgs(args)
-      });
-      _error(...args);
-    };
-
-    window.console.exception = (message?: string, ...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'critical',
-        data: `Exception: ${message}\n${parseArgs(args)}`
-      });
-      _exception(...args);
-    };
-
-    window.console.trace = (...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'info',
-        data: parseArgs(args)
-      });
-      _trace(...args);
-    };
-
-    window.console.table = (...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'info',
-        data: parseArgs(args)
-      });
-      _table(...args);
-    };
-
     if (palette) {
       palette.addItem({
         command: CommandIDs.open,
@@ -295,3 +182,158 @@ const extension: JupyterFrontEndPlugin<void> = {
 };
 
 export default extension;
+
+window.onerror = (msg, url, lineNo, columnNo, error): boolean => {
+  Private.log({
+    type: 'text',
+    level: 'critical',
+    data: `${url}:${lineNo} ${msg}\n${error}`
+  });
+
+  return false;
+};
+
+const _debug = console.debug;
+window.console.debug = (...args: any[]): void => {
+  Private.log({
+    type: 'text',
+    level: 'debug',
+    data: Private.parseArgs(args)
+  });
+
+  _debug(...args);
+};
+
+const _log = console.log;
+window.console.log = (...args: any[]): void => {
+  Private.log({
+    type: 'text',
+    level: 'debug',
+    data: Private.parseArgs(args)
+  });
+
+  _log(...args);
+};
+
+const _info = console.info;
+window.console.info = (...args: any[]): void => {
+  Private.log({
+    type: 'text',
+    level: 'info',
+    data: Private.parseArgs(args)
+  });
+
+  _info(...args);
+};
+
+const _warn = console.warn;
+window.console.warn = (...args: any[]): void => {
+  Private.log({
+    type: 'text',
+    level: 'warning',
+    data: Private.parseArgs(args)
+  });
+
+  _warn(...args);
+};
+
+const _error = console.error;
+window.console.error = (...args: any[]): void => {
+  Private.log({
+    type: 'text',
+    level: 'critical',
+    data: Private.parseArgs(args)
+  });
+
+  _error(...args);
+};
+
+const _exception = console.exception;
+window.console.exception = (message?: string, ...args: any[]): void => {
+  Private.log({
+    type: 'text',
+    level: 'critical',
+    data: `Exception: ${message}\n${Private.parseArgs(args)}`
+  });
+
+  _exception(...args);
+};
+
+const _trace = console.trace;
+window.console.trace = (...args: any[]): void => {
+  Private.log({
+    type: 'text',
+    level: 'info',
+    data: Private.parseArgs(args)
+  });
+
+  _trace(...args);
+};
+
+const _table = console.table;
+window.console.table = (...args: any[]): void => {
+  Private.log({
+    type: 'text',
+    level: 'info',
+    data: Private.parseArgs(args)
+  });
+
+  _table(...args);
+};
+
+namespace Private {
+  // https://stackoverflow.com/a/11616993
+  // We need to clear cache after each use.
+  let cache: any = [];
+  const refReplacer = (key: any, value: any) => {
+    if (typeof value === 'object' && value !== null) {
+      if (cache.indexOf(value) !== -1) {
+        return;
+      }
+      cache.push(value);
+    }
+    return value;
+  };
+
+  /**
+   * Parse the argument of a console message.
+   * @param args Arguments.
+   * @returns a string with the message.
+   */
+  export const parseArgs = (args: any[]): string => {
+    let data = '';
+    args.forEach(arg => {
+      try {
+        data +=
+          (typeof arg === 'object' && arg !== null
+            ? JSON.stringify(arg)
+            : arg) + ' ';
+      } catch (e) {
+        try {
+          const msg =
+            'This error contains a object with a circular reference. Duplicated attributes might have been dropped during the process of removing the reference.\n';
+          const obj = JSON.stringify(arg, refReplacer);
+          cache = [];
+          console.error(msg, obj);
+          data += obj;
+        } catch (e) {
+          data += ' ';
+        }
+      }
+    });
+    return data;
+  };
+
+  // Store messages until the plugin is activated
+  export const MESSAGES: ILogPayload[] = [];
+
+  export function log(msg: ILogPayload): void {
+    if (logger) {
+      logger(msg);
+    } else {
+      MESSAGES.push(msg);
+    }
+  }
+
+  export let logger: (msg: ILogPayload) => void;
+}
