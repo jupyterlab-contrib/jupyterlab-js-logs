@@ -50,8 +50,8 @@ const extension: JupyterFrontEndPlugin<void> = {
   ) => {
     const { commands } = app;
 
-    let logConsolePanel: LogConsolePanel = null;
-    let logConsoleWidget: MainAreaWidget<LogConsolePanel> = null;
+    let logConsolePanel: LogConsolePanel | null = null;
+    let logConsoleWidget: MainAreaWidget<LogConsolePanel> | null = null;
 
     const tracker = new WidgetTracker<MainAreaWidget<LogConsolePanel>>({
       namespace: 'jupyterlab-js-logs'
@@ -165,7 +165,7 @@ const extension: JupyterFrontEndPlugin<void> = {
     const _warn = console.warn;
     const _error = console.error;
 
-    const _exception = console.exception;
+    // const _exception = console.exception;
     const _trace = console.trace;
     const _table = console.table;
 
@@ -251,14 +251,14 @@ const extension: JupyterFrontEndPlugin<void> = {
       _error(...args);
     };
 
-    window.console.exception = (message?: string, ...args: any[]): void => {
-      logConsolePanel?.logger?.log({
-        type: 'text',
-        level: 'critical',
-        data: `Exception: ${message}\n${parseArgs(args)}`
-      });
-      _exception(...args);
-    };
+    // window.console.exception = (message?: string, ...args: any[]): void => {
+    //   logConsolePanel?.logger?.log({
+    //     type: 'text',
+    //     level: 'critical',
+    //     data: `Exception: ${message}\n${parseArgs(args)}`
+    //   });
+    //   _exception(...args);
+    // };
 
     window.console.trace = (...args: any[]): void => {
       logConsolePanel?.logger?.log({

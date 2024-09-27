@@ -1,78 +1,80 @@
-# Making a new release of JupyterLab-js-logs
+# Making a new release of jupyterlab_js_logs
 
-## Automated releases with `jupyter_releaser`
+The extension can be published to `PyPI` and `npm` manually or using the [Jupyter Releaser](https://github.com/jupyter-server/jupyter_releaser).
 
-The recommended way to make a release is to use [`jupyter_releaser`](https://github.com/jupyter-server/jupyter_releaser#checklist-for-adoption).
+## Manual release
 
----
+### Python package
 
-Below are the instructions to make releases manually. They are kept here as reference and might be removed at some point in the future.
-
-### Getting a clean environment
-
-Creating a new environment can help avoid pushing local changes and any extra tag.
+This extension can be distributed as Python packages. All of the Python
+packaging instructions are in the `pyproject.toml` file to wrap your extension in a
+Python package. Before generating a package, you first need to install some tools:
 
 ```bash
-mamba create -q -y -n jlab-js-logs-release -c conda-forge twine nodejs keyring pip jupyter-packaging jupyterlab=3.0
-conda activate jlab-js-logs-release
+pip install build twine hatch
 ```
 
-Alternatively, the local repository can be cleaned with:
+Bump the version using `hatch`. By default this will create a tag.
+See the docs on [hatch-nodejs-version](https://github.com/agoose77/hatch-nodejs-version#semver) for details.
 
 ```bash
-git clean -fdx
+hatch version <new-version>
 ```
 
-### Releasing on PyPI
-
-Make sure the `dist/` folder is empty.
-
-1. If the JupyterLab extension has changed, make sure to bump the version number in `./package.json`
-2. Update [setup.py](./setup.py) and [binder/environment.yml](./binder/environment.yml) with the new version number
-3. `python setup.py sdist bdist_wheel`
-4. Double check the size of the bundles in the `dist/` folder
-5. Run the tests
-6. Make sure the JupyterLab extension is correctly bundled in source distribution
-7. `export TWINE_USERNAME=mypypi_username`
-8. `twine upload dist/*`
-
-## Making a new release of JupyterLab-js-logs
-
-The prebuilt extension is already packaged in the main Python package.
-
-However we also publish it to `npm` to:
-
-- let other third-party extensions depend on `jupyterlab-js-logs`
-- let users install from source if they would like to
-
-### Releasing on npm
-
-1. The version number in [./package.json](./package.json) should have been updated during the release step of the Python package (see above)
-2. `npm login`
-3. `npm publish`
-
-### Releasing on conda-forge
-
-The simplest is to wait for the bot to automatically open the PR.
-
-Alternatively, to do the update manually:
-
-1. Open a new PR on https://github.com/conda-forge/jupyterlab-js-logs-feedstock to update the `version` and the `sha256` hash (see [example](https://github.com/conda-forge/jupyterlab-js-logs/pull/12/files))
-2. Wait for the tests
-3. Merge the PR
-
-The new version will be available on `conda-forge` soon after.
-
-### Committing and tagging
-
-Commit the changes, create a new release tag, and update the `stable` branch (for Binder), where `x.y.z` denotes the new version:
+Make sure to clean up all the development files before building the package:
 
 ```bash
-git checkout master
-git add setup.py binder/environment.yml package.json
-git commit -m "Release x.y.z"
-git tag x.y.z
-git checkout stable
-git reset --hard master
-git push origin master stable x.y.z
+jlpm clean:all
 ```
+
+You could also clean up the local git repository:
+
+```bash
+git clean -dfX
+```
+
+To create a Python source package (`.tar.gz`) and the binary package (`.whl`) in the `dist/` directory, do:
+
+```bash
+python -m build
+```
+
+> `python setup.py sdist bdist_wheel` is deprecated and will not work for this package.
+
+Then to upload the package to PyPI, do:
+
+```bash
+twine upload dist/*
+```
+
+### NPM package
+
+To publish the frontend part of the extension as a NPM package, do:
+
+```bash
+npm login
+npm publish --access public
+```
+
+## Automated releases with the Jupyter Releaser
+
+The extension repository should already be compatible with the Jupyter Releaser. But
+the GitHub repository and the package managers need to be properly set up. Please
+follow the instructions of the Jupyter Releaser [checklist](https://jupyter-releaser.readthedocs.io/en/latest/how_to_guides/convert_repo_from_repo.html).
+
+Here is a summary of the steps to cut a new release:
+
+- Go to the Actions panel
+- Run the "Step 1: Prep Release" workflow
+- Check the draft changelog
+- Run the "Step 2: Publish Release" workflow
+
+> [!NOTE]
+> Check out the [workflow documentation](https://jupyter-releaser.readthedocs.io/en/latest/get_started/making_release_from_repo.html)
+> for more information.
+
+## Publishing to `conda-forge`
+
+If the package is not on conda forge yet, check the documentation to learn how to add it: https://conda-forge.org/docs/maintainer/adding_pkgs.html
+
+Otherwise a bot should pick up the new version publish to PyPI, and open a new PR on the feedstock repository automatically.
