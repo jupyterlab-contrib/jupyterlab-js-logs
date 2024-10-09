@@ -122,3 +122,6 @@ dmypy.json
 
 # Upgrade script
 _temp_extension
+
+# Jupyter
+Untitled*.ipynb
