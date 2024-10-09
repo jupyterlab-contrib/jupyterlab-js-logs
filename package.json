@@ -64,8 +64,8 @@
         "@jupyterlab/nbformat": "^4.2.5",
         "@jupyterlab/rendermime": "^4.2.5",
         "@jupyterlab/ui-components": "^4.2.5",
-        "@lumino/coreutils": "^2.0.0",
-        "@lumino/widgets": "^2.3.1-alpha.0"
+        "@lumino/coreutils": "^2.2.0",
+        "@lumino/widgets": "^2.5.0"
     },
     "devDependencies": {
         "@jupyterlab/builder": "^4.0.0",
@@ -98,17 +98,6 @@
     "jupyterlab": {
         "extension": true,
         "outputDir": "jupyterlab_js_logs/labextension"
-    },
-    "jupyter-releaser": {
-        "hooks": {
-            "before-build-npm": [
-                "python -m pip install jupyterlab~=3.0",
-                "jlpm"
-            ],
-            "before-build-python": [
-                "jlpm clean:all"
-            ]
-        }
     },
     "publishConfig": {
         "access": "public"
