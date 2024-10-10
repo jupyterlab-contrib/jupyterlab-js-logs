@@ -10,6 +10,6 @@ labextension_name: jupyterlab-js-logs
 project_short_description: JupyterLab extension to show the js logs from the browser
     dev tools console
 python_name: jupyterlab_js_logs
-repository: https://github.com/QuantStack/jupyterlab-js-logs.git
+repository: https://github.com/jupyterlab-contrib/jupyterlab-js-logs.git
 test: false
 

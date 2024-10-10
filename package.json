@@ -7,13 +7,13 @@
         "jupyterlab",
         "jupyterlab-extension"
     ],
-    "homepage": "https://github.com/QuantStack/jupyterlab-js-logs",
+    "homepage": "https://github.com/jupyterlab-contrib/jupyterlab-js-logs",
     "bugs": {
-        "url": "https://github.com/QuantStack/jupyterlab-js-logs/issues"
+        "url": "https://github.com/jupyterlab-contrib/jupyterlab-js-logs/issues"
     },
     "license": "BSD-3-Clause",
     "author": {
-        "name": "jupyterlab-js-logs contributors",
+        "name": "JupyterLab Contrib Team",
         "email": ""
     },
     "files": [
@@ -27,7 +27,7 @@
     "styleModule": "style/index.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/QuantStack/jupyterlab-js-logs.git"
+        "url": "https://github.com/jupyterlab-contrib/jupyterlab-js-logs.git"
     },
     "scripts": {
         "build": "jlpm build:lib && jlpm build:labextension:dev",
