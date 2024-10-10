@@ -154,7 +154,7 @@ const extension: JupyterFrontEndPlugin<void> = {
       logConsolePanel?.logger?.log({
         type: 'text',
         level: 'critical',
-        data: `${url}:${lineNo} ${msg}\n${error}`
+        data: `${url}:${lineNo}:${columnNo} ${msg}\n${error}`
       });
       return false;
     };
@@ -186,10 +186,14 @@ const extension: JupyterFrontEndPlugin<void> = {
       let data = '';
       args.forEach(arg => {
         try {
-          data +=
-            (typeof arg === 'object' && arg !== null
-              ? JSON.stringify(arg)
-              : arg) + ' ';
+          if (arg instanceof Error) {
+            data += arg.stack || arg.message || arg;
+          } else {
+            data +=
+              (typeof arg === 'object' && arg !== null
+                ? JSON.stringify(arg)
+                : arg) + ' ';
+          }
         } catch (e) {
           try {
             const msg =
