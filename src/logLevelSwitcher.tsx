@@ -23,7 +23,9 @@ export default class LogLevelSwitcher extends ReactWidget {
     super();
     this.addClass('jp-LogConsole-toolbarLogLevel');
     this._logConsole = widget;
-    this._logConsole.logger.level = 'debug';
+    if (this._logConsole.logger) {
+      this._logConsole.logger.level = 'debug';
+    }
     if (widget.source) {
       this.update();
     }
@@ -94,13 +96,9 @@ export default class LogLevelSwitcher extends ReactWidget {
           options={
             logger === null
               ? []
-              : [
-                  'Critical',
-                  'Error',
-                  'Warning',
-                  'Info',
-                  'Debug'
-                ].map(label => ({ label, value: label.toLowerCase() }))
+              : ['Critical', 'Error', 'Warning', 'Info', 'Debug'].map(
+                  label => ({ label, value: label.toLowerCase() })
+                )
           }
         />
       </>

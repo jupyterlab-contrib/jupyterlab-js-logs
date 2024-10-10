@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.3.5
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: ''
+author_name: jupyterlab-js-logs contributors
+has_binder: true
+has_settings: false
+kind: frontend
+labextension_name: jupyterlab-js-logs
+project_short_description: JupyterLab extension to show the js logs from the browser
+    dev tools console
+python_name: jupyterlab_js_logs
+repository: https://github.com/QuantStack/jupyterlab-js-logs.git
+test: false
+
