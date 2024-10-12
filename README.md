@@ -1,6 +1,7 @@
 # jupyterlab-js-logs
 
 ![Github Actions Status](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/workflows/Build/badge.svg)
+[![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://jupyterlab-contrib.github.io/jupyterlab-js-logs)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyterlab-contrib/jupyterlab-js-logs/main?urlpath=lab)
 
 JupyterLab extension to show the console logs from the browser dev tools console.
