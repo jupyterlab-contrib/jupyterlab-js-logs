@@ -1,5 +1,6 @@
 # jupyterlab-js-logs
 
+[![Extension status](https://img.shields.io/badge/status-ready-success 'ready to be used')](https://jupyterlab-contrib.github.io/)
 ![Github Actions Status](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/workflows/Build/badge.svg)
 [![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://jupyterlab-contrib.github.io/jupyterlab-js-logs)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyterlab-contrib/jupyterlab-js-logs/main?urlpath=lab)
