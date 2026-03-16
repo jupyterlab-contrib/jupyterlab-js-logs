@@ -2,6 +2,31 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.0.0
+
+([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/compare/v0.2.6...a2c64b476cbd83cda86e1d2c1f627fc627a99698))
+
+### Maintenance and upkeep improvements
+
+- Update to JupyterLab 4 [#31](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/31) ([@jtpio](https://github.com/jtpio))
+
+### Documentation improvements
+
+- Add ready badge to the README [#35](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/35) ([@jtpio](https://github.com/jtpio))
+- Add JupyterLite demo [#34](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/34) ([@jtpio](https://github.com/jtpio))
+- Update links to the repo [#33](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/33) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/graphs/contributors?from=2022-01-25&to=2026-03-16&type=c))
+
+@jtpio ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3Ajtpio+updated%3A2022-01-25..2026-03-16&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.6
 
 ([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/compare/v0.2.5...854af201b8186f50ce781096fc46ccec758adce0))
@@ -25,8 +50,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/graphs/contributors?from=2022-01-21&to=2022-01-25&type=c))
 
 [@hbcarlos](https://github.com/search?q=repo%3AQuantStack%2Fjupyterlab-js-logs+involves%3Ahbcarlos+updated%3A2022-01-21..2022-01-25&type=Issues) | [@jtpio](https://github.com/search?q=repo%3AQuantStack%2Fjupyterlab-js-logs+involves%3Ajtpio+updated%3A2022-01-21..2022-01-25&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.5
 
