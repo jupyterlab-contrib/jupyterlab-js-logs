@@ -6,6 +6,7 @@ import {
 
 import {
   ICommandPalette,
+  IWidgetTracker,
   MainAreaWidget,
   WidgetTracker,
   CommandToolbarButton
@@ -16,6 +17,8 @@ import { LoggerRegistry, LogConsolePanel } from '@jupyterlab/logconsole';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
 import { addIcon, clearIcon, LabIcon } from '@jupyterlab/ui-components';
+
+import { Token } from '@lumino/coreutils';
 
 import LogLevelSwitcher from './logLevelSwitcher';
 
@@ -35,11 +38,22 @@ export namespace CommandIDs {
 }
 
 /**
+ * The log console tracker token.
+ */
+export interface ILogConsoleTracker
+  extends IWidgetTracker<MainAreaWidget<LogConsolePanel>> {}
+
+export const ILogConsoleTracker = new Token<ILogConsoleTracker>(
+  'jupyterlab-js-logs:ILogConsoleTracker'
+);
+
+/**
  * The main jupyterlab-js-logs plugin.
  */
-const extension: JupyterFrontEndPlugin<void> = {
+const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
   id: 'js-logs',
   autoStart: true,
+  provides: ILogConsoleTracker,
   requires: [IRenderMimeRegistry],
   optional: [ICommandPalette, ILayoutRestorer],
   activate: (
@@ -295,6 +309,8 @@ const extension: JupyterFrontEndPlugin<void> = {
         name: () => 'js-logs'
       });
     }
+
+    return tracker;
   }
 };
 
