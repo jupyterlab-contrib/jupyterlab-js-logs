@@ -40,16 +40,17 @@ export namespace CommandIDs {
 /**
  * The log console tracker token.
  */
-export const ILogConsoleTracker = new Token<
-  IWidgetTracker<MainAreaWidget<LogConsolePanel>>
->('jupyterlab-js-logs:ILogConsoleTracker');
+export interface ILogConsoleTracker
+  extends IWidgetTracker<MainAreaWidget<LogConsolePanel>> {}
+
+export const ILogConsoleTracker = new Token<ILogConsoleTracker>(
+  'jupyterlab-js-logs:ILogConsoleTracker'
+);
 
 /**
  * The main jupyterlab-js-logs plugin.
  */
-const extension: JupyterFrontEndPlugin<
-  IWidgetTracker<MainAreaWidget<LogConsolePanel>>
-> = {
+const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
   id: 'js-logs',
   autoStart: true,
   provides: ILogConsoleTracker,
