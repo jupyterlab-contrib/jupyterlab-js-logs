@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.1.0
+
+([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/compare/v1.0.0...121012ff58203e313c676a75d83bad1167114334))
+
+### Enhancements made
+
+- Expose Log Console Tracker [#40](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/40) ([@MUFFANUJ](https://github.com/MUFFANUJ), [@krassowski](https://github.com/krassowski))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/graphs/contributors?from=2026-03-16&to=2026-04-07&type=c))
+
+@krassowski ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3Akrassowski+updated%3A2026-03-16..2026-04-07&type=Issues)) | @MUFFANUJ ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3AMUFFANUJ+updated%3A2026-03-16..2026-04-07&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.0.0
 
 ([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/compare/v0.2.6...a2c64b476cbd83cda86e1d2c1f627fc627a99698))
@@ -24,8 +43,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/graphs/contributors?from=2022-01-25&to=2026-03-16&type=c))
 
 @jtpio ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3Ajtpio+updated%3A2022-01-25..2026-03-16&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.6
 
