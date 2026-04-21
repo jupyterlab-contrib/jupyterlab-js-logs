@@ -18,13 +18,26 @@ export default class LogLevelSwitcher extends ReactWidget {
    * Construct a new cell type switcher.
    *
    * @param widget The log console panel
+   * @param defaultLevel The initial logger level for the panel
+   * @param setLevel Optional callback to set level
    */
-  constructor(widget: LogConsolePanel) {
+  constructor(
+    widget: LogConsolePanel,
+    defaultLevel: LogLevel = 'info',
+    setLevel?: (level: LogLevel) => void
+  ) {
     super();
     this.addClass('jp-LogConsole-toolbarLogLevel');
     this._logConsole = widget;
+    this._setLevel =
+      setLevel ??
+      ((level: LogLevel) => {
+        if (this._logConsole.logger) {
+          this._logConsole.logger.level = level;
+        }
+      });
     if (this._logConsole.logger) {
-      this._logConsole.logger.level = 'debug';
+      this._setLevel(defaultLevel);
     }
     if (widget.source) {
       this.update();
@@ -54,9 +67,7 @@ export default class LogLevelSwitcher extends ReactWidget {
    * @param event The HTML select event.
    */
   handleChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    if (this._logConsole.logger) {
-      this._logConsole.logger.level = event.target.value as LogLevel;
-    }
+    this._setLevel(event.target.value as LogLevel);
     this.update();
   };
 
@@ -105,5 +116,6 @@ export default class LogLevelSwitcher extends ReactWidget {
     );
   }
   private _logConsole: LogConsolePanel;
+  private _setLevel: (level: LogLevel) => void;
   private _id = `level-${UUID.uuid4()}`;
 }
