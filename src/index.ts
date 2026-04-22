@@ -114,7 +114,7 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
 
     const applySettings = (settings: ISettingRegistry.ISettings): void => {
       const configuredLevel = settings.get(DEFAULT_LEVEL_SETTING).composite;
-      defaultLogLevel = isLogLevel(configuredLevel)
+      const nextDefaultLogLevel = isLogLevel(configuredLevel)
         ? configuredLevel
         : DEFAULT_LOG_LEVEL;
       const configuredShowLevelChangeMessages = settings.get(
@@ -124,7 +124,12 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
         typeof configuredShowLevelChangeMessages === 'boolean'
           ? configuredShowLevelChangeMessages
           : DEFAULT_SHOW_LEVEL_CHANGE_MESSAGES;
-      setLoggerLevel(defaultLogLevel);
+      if (nextDefaultLogLevel !== defaultLogLevel) {
+        defaultLogLevel = nextDefaultLogLevel;
+        setLoggerLevel(defaultLogLevel);
+      } else {
+        defaultLogLevel = nextDefaultLogLevel;
+      }
     };
 
     const removeLastMetadataEntry = (

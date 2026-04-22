@@ -15,11 +15,11 @@ import React from 'react';
  */
 export default class LogLevelSwitcher extends ReactWidget {
   /**
-   * Construct a new cell type switcher.
+   * Construct a new log level switcher.
    *
-   * @param widget The log console panel
-   * @param defaultLevel The initial logger level for the panel
-   * @param setLevel Optional callback to set level
+   * @param widget The log console panel whose log level is controlled
+   * @param defaultLevel The initial log level for the panel
+   * @param setLevel Optional callback to set the log level
    */
   constructor(
     widget: LogConsolePanel,
