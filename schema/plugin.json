@@ -1,0 +1,23 @@
+{
+  "title": "JS Logs",
+  "description": "Settings for the JS Logs extension.",
+  "jupyter.lab.setting-icon": "js-logs:js-icon",
+  "jupyter.lab.setting-icon-label": "JS Logs",
+  "type": "object",
+  "properties": {
+    "defaultLevel": {
+      "type": "string",
+      "title": "Default Log Level",
+      "description": "Default log level applied when opening the JS Logs panel.",
+      "default": "info",
+      "enum": ["critical", "error", "warning", "info", "debug"]
+    },
+    "showLevelChangeMessages": {
+      "type": "boolean",
+      "title": "Show Level Change Messages",
+      "description": "Whether to log metadata messages when the log level changes.",
+      "default": false
+    }
+  },
+  "additionalProperties": false
+}

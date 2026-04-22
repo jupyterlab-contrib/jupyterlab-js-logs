@@ -12,9 +12,15 @@ import {
   CommandToolbarButton
 } from '@jupyterlab/apputils';
 
-import { LoggerRegistry, LogConsolePanel } from '@jupyterlab/logconsole';
+import {
+  LoggerRegistry,
+  LogConsolePanel,
+  LogLevel
+} from '@jupyterlab/logconsole';
 
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
+
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
 import { addIcon, clearIcon, LabIcon } from '@jupyterlab/ui-components';
 
@@ -47,25 +53,45 @@ export const ILogConsoleTracker = new Token<ILogConsoleTracker>(
   'jupyterlab-js-logs:ILogConsoleTracker'
 );
 
+const PLUGIN_ID = 'js-logs';
+const SETTINGS_PLUGIN_ID = 'jupyterlab-js-logs:plugin';
+const DEFAULT_LEVEL_SETTING = 'defaultLevel';
+const SHOW_LEVEL_CHANGE_MESSAGES_SETTING = 'showLevelChangeMessages';
+const DEFAULT_LOG_LEVEL: LogLevel = 'info';
+const DEFAULT_SHOW_LEVEL_CHANGE_MESSAGES = false;
+const LOG_LEVELS: LogLevel[] = [
+  'critical',
+  'error',
+  'warning',
+  'info',
+  'debug'
+];
+
+const isLogLevel = (value: unknown): value is LogLevel =>
+  typeof value === 'string' && LOG_LEVELS.includes(value as LogLevel);
+
 /**
  * The main jupyterlab-js-logs plugin.
  */
 const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
-  id: 'js-logs',
+  id: PLUGIN_ID,
   autoStart: true,
   provides: ILogConsoleTracker,
   requires: [IRenderMimeRegistry],
-  optional: [ICommandPalette, ILayoutRestorer],
+  optional: [ICommandPalette, ILayoutRestorer, ISettingRegistry],
   activate: (
     app: JupyterFrontEnd,
     rendermime: IRenderMimeRegistry,
     palette: ICommandPalette | null,
-    restorer: ILayoutRestorer | null
+    restorer: ILayoutRestorer | null,
+    settingsRegistry: ISettingRegistry | null
   ) => {
     const { commands } = app;
 
     let logConsolePanel: LogConsolePanel | null = null;
     let logConsoleWidget: MainAreaWidget<LogConsolePanel> | null = null;
+    let defaultLogLevel: LogLevel = DEFAULT_LOG_LEVEL;
+    let showLevelChangeMessages = DEFAULT_SHOW_LEVEL_CHANGE_MESSAGES;
 
     const tracker = new WidgetTracker<MainAreaWidget<LogConsolePanel>>({
       namespace: 'jupyterlab-js-logs'
@@ -76,6 +102,77 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
       svgstr: jsIconStr
     });
 
+    const setLoggerLevel = (level: LogLevel): void => {
+      const logger = logConsolePanel?.logger;
+      if (!logger) {
+        return;
+      }
+      if (logger.level !== level) {
+        logger.level = level;
+      }
+    };
+
+    const applySettings = (settings: ISettingRegistry.ISettings): void => {
+      const configuredLevel = settings.get(DEFAULT_LEVEL_SETTING).composite;
+      const nextDefaultLogLevel = isLogLevel(configuredLevel)
+        ? configuredLevel
+        : DEFAULT_LOG_LEVEL;
+      const configuredShowLevelChangeMessages = settings.get(
+        SHOW_LEVEL_CHANGE_MESSAGES_SETTING
+      ).composite;
+      showLevelChangeMessages =
+        typeof configuredShowLevelChangeMessages === 'boolean'
+          ? configuredShowLevelChangeMessages
+          : DEFAULT_SHOW_LEVEL_CHANGE_MESSAGES;
+      if (nextDefaultLogLevel !== defaultLogLevel) {
+        defaultLogLevel = nextDefaultLogLevel;
+        setLoggerLevel(defaultLogLevel);
+      } else {
+        defaultLogLevel = nextDefaultLogLevel;
+      }
+    };
+
+    const removeLastMetadataEntry = (
+      logger: NonNullable<LogConsolePanel['logger']>
+    ): void => {
+      const entries = logger.outputAreaModel.toJSON();
+      if (entries.length === 0) {
+        return;
+      }
+      const lastEntry = entries[entries.length - 1] as { level?: unknown };
+      if (lastEntry.level !== 'metadata') {
+        return;
+      }
+      entries.pop();
+      logger.outputAreaModel.fromJSON(entries);
+    };
+
+    const connectLevelChangeHandler = (panel: LogConsolePanel): void => {
+      const logger = panel.logger;
+      if (!logger) {
+        return;
+      }
+      logger.stateChanged.connect((sender, change) => {
+        if (change.name === 'level' && !showLevelChangeMessages) {
+          removeLastMetadataEntry(sender);
+        }
+      });
+    };
+
+    if (settingsRegistry) {
+      void settingsRegistry
+        .load(SETTINGS_PLUGIN_ID)
+        .then(settings => {
+          applySettings(settings);
+          settings.changed.connect(() => applySettings(settings));
+        })
+        .catch(reason => {
+          console.error(
+            `Failed to load ${SETTINGS_PLUGIN_ID} settings.\n${reason}`
+          );
+        });
+    }
+
     const createLogConsoleWidget = (): void => {
       logConsolePanel = new LogConsolePanel(
         new LoggerRegistry({
@@ -85,6 +182,7 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
       );
 
       logConsolePanel.source = 'js-logs';
+      connectLevelChangeHandler(logConsolePanel);
 
       logConsoleWidget = new MainAreaWidget<LogConsolePanel>({
         content: logConsolePanel
@@ -111,7 +209,11 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
 
       logConsoleWidget.toolbar.addItem(
         'level',
-        new LogLevelSwitcher(logConsoleWidget.content)
+        new LogLevelSwitcher(
+          logConsoleWidget.content,
+          defaultLogLevel,
+          setLoggerLevel
+        )
       );
 
       logConsoleWidget.disposed.connect(() => {
@@ -143,8 +245,8 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
 
     commands.addCommand(CommandIDs.level, {
       execute: (args: any) => {
-        if (logConsolePanel?.logger) {
-          logConsolePanel.logger.level = args.level;
+        if (isLogLevel(args.level)) {
+          setLoggerLevel(args.level);
         }
       },
       isEnabled: () => logConsolePanel?.source !== null,
