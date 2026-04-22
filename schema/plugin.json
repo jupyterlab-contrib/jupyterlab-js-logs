@@ -1,6 +1,8 @@
 {
   "title": "JS Logs",
   "description": "Settings for the JS Logs extension.",
+  "jupyter.lab.setting-icon": "js-logs:js-icon",
+  "jupyter.lab.setting-icon-label": "JS Logs",
   "type": "object",
   "properties": {
     "defaultLevel": {
