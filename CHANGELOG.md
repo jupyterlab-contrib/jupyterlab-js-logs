@@ -2,6 +2,37 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.2.0
+
+([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/compare/v1.1.0...8d4b3bc57b65a93dfe1c24fb47fd8fdadd4f461f))
+
+### Enhancements made
+
+- Set JS Logs default level to info and add minimal log-level settings [#42](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/42) ([@MUFFANUJ](https://github.com/MUFFANUJ), [@jtpio](https://github.com/jtpio), [@krassowski](https://github.com/krassowski))
+
+### Maintenance and upkeep improvements
+
+- Bump nanoid from 3.3.7 to 3.3.8 [#37](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/37) ([@krassowski](https://github.com/krassowski))
+- Bump cross-spawn from 6.0.5 to 6.0.6 [#36](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/36) ([@krassowski](https://github.com/krassowski))
+
+### Other merged PRs
+
+- Bump lodash-es from 4.17.21 to 4.18.1 [#46](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/46) ([@krassowski](https://github.com/krassowski))
+- Bump lodash from 4.17.21 to 4.18.1 [#45](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/45) ([@krassowski](https://github.com/krassowski))
+- Bump flatted from 3.3.1 to 3.4.2 [#44](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/44) ([@krassowski](https://github.com/krassowski))
+- Bump picomatch from 2.3.1 to 2.3.2 [#43](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/43) ([@krassowski](https://github.com/krassowski))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/graphs/contributors?from=2026-04-07&to=2026-04-25&type=c))
+
+@jtpio ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3Ajtpio+updated%3A2026-04-07..2026-04-25&type=Issues)) | @krassowski ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3Akrassowski+updated%3A2026-04-07..2026-04-25&type=Issues)) | @MUFFANUJ ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3AMUFFANUJ+updated%3A2026-04-07..2026-04-25&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.1.0
 
 ([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/compare/v1.0.0...121012ff58203e313c676a75d83bad1167114334))
@@ -18,8 +49,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/graphs/contributors?from=2026-03-16&to=2026-04-07&type=c))
 
 @krassowski ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3Akrassowski+updated%3A2026-03-16..2026-04-07&type=Issues)) | @MUFFANUJ ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3AMUFFANUJ+updated%3A2026-03-16..2026-04-07&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.0.0
 
