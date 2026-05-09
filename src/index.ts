@@ -26,6 +26,12 @@ import { addIcon, clearIcon, LabIcon } from '@jupyterlab/ui-components';
 
 import { Token } from '@lumino/coreutils';
 
+import {
+  LogEntryActionsRenderer,
+  ILogEntryActionRegistry,
+  LogEntryActionRegistry
+} from './logEntryActions';
+
 import LogLevelSwitcher from './logLevelSwitcher';
 
 import jsIconStr from '../style/js.svg';
@@ -54,6 +60,7 @@ export const ILogConsoleTracker = new Token<ILogConsoleTracker>(
 );
 
 const PLUGIN_ID = 'js-logs';
+const ACTIONS_PLUGIN_ID = 'jupyterlab-js-logs:entry-actions';
 const SETTINGS_PLUGIN_ID = 'jupyterlab-js-logs:plugin';
 const DEFAULT_LEVEL_SETTING = 'defaultLevel';
 const SHOW_LEVEL_CHANGE_MESSAGES_SETTING = 'showLevelChangeMessages';
@@ -70,6 +77,14 @@ const LOG_LEVELS: LogLevel[] = [
 const isLogLevel = (value: unknown): value is LogLevel =>
   typeof value === 'string' && LOG_LEVELS.includes(value as LogLevel);
 
+const logEntryActionsExtension: JupyterFrontEndPlugin<ILogEntryActionRegistry> =
+  {
+    id: ACTIONS_PLUGIN_ID,
+    autoStart: true,
+    provides: ILogEntryActionRegistry,
+    activate: () => new LogEntryActionRegistry()
+  };
+
 /**
  * The main jupyterlab-js-logs plugin.
  */
@@ -78,13 +93,19 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
   autoStart: true,
   provides: ILogConsoleTracker,
   requires: [IRenderMimeRegistry],
-  optional: [ICommandPalette, ILayoutRestorer, ISettingRegistry],
+  optional: [
+    ICommandPalette,
+    ILayoutRestorer,
+    ISettingRegistry,
+    ILogEntryActionRegistry
+  ],
   activate: (
     app: JupyterFrontEnd,
     rendermime: IRenderMimeRegistry,
     palette: ICommandPalette | null,
     restorer: ILayoutRestorer | null,
-    settingsRegistry: ISettingRegistry | null
+    settingsRegistry: ISettingRegistry | null,
+    actionRegistry: ILogEntryActionRegistry | null
   ) => {
     const { commands } = app;
 
@@ -184,6 +205,14 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
       logConsolePanel.source = 'js-logs';
       connectLevelChangeHandler(logConsolePanel);
 
+      let entryActionRenderer: LogEntryActionsRenderer | null = null;
+      if (actionRegistry) {
+        entryActionRenderer = new LogEntryActionsRenderer({
+          panel: logConsolePanel,
+          registry: actionRegistry
+        });
+      }
+
       logConsoleWidget = new MainAreaWidget<LogConsolePanel>({
         content: logConsolePanel
       });
@@ -217,6 +246,8 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
       );
 
       logConsoleWidget.disposed.connect(() => {
+        entryActionRenderer?.dispose();
+        entryActionRenderer = null;
         logConsoleWidget = null;
         logConsolePanel = null;
         commands.notifyCommandChanged();
@@ -416,4 +447,15 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
   }
 };
 
-export default extension;
+const plugins: JupyterFrontEndPlugin<any>[] = [
+  logEntryActionsExtension,
+  extension
+];
+
+export default plugins;
+
+export {
+  ILogEntryAction,
+  ILogEntryActionMessage,
+  ILogEntryActionRegistry
+} from './logEntryActions';

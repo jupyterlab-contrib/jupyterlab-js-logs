@@ -3,3 +3,24 @@
 
     https://jupyterlab.readthedocs.io/en/stable/developer/css.html
 */
+
+.jp-JSLogs-entryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.jp-JSLogs-entryActionButton {
+  border: 1px solid var(--jp-border-color2);
+  border-radius: var(--jp-border-radius);
+  background: var(--jp-layout-color1);
+  color: var(--jp-ui-font-color1);
+  padding: 1px 6px;
+  min-height: 20px;
+  cursor: pointer;
+}
+
+.jp-JSLogs-entryActionButton:hover {
+  background: var(--jp-layout-color2);
+}
