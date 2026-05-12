@@ -1,6 +1,8 @@
 import { LogConsolePanel, LogOutputModel } from '@jupyterlab/logconsole';
 
 import type { IOutputModel } from '@jupyterlab/rendermime';
+import { checkIcon } from '@jupyterlab/ui-components';
+import type { LabIcon } from '@jupyterlab/ui-components';
 
 import { Token } from '@lumino/coreutils';
 
@@ -10,6 +12,10 @@ import { ISignal, Signal } from '@lumino/signaling';
 
 const ACTIONS_CONTAINER_CLASS = 'jp-JSLogs-entryActions';
 const ACTION_BUTTON_CLASS = 'jp-JSLogs-entryActionButton';
+const ACTION_ICON_CLASS = 'jp-JSLogs-entryActionIcon';
+const ACTION_SUCCESS_ICON_CLASS = 'jp-JSLogs-entryActionSuccessIcon';
+const ACTION_SUCCESS_CLASS = 'jp-mod-success';
+const ACTION_SUCCESS_DURATION_MS = 900;
 const OUTPUT_AREA_CLASS = 'jp-OutputArea';
 const OUTPUT_ITEM_CLASS = 'jp-OutputArea-child';
 
@@ -55,14 +61,19 @@ export interface ILogEntryAction {
   id: string;
 
   /**
-   * Label shown in the action button.
+   * Optional label shown in the action button.
    */
-  label: string;
+  label?: string;
 
   /**
    * Optional tooltip.
    */
   caption?: string;
+
+  /**
+   * Optional icon shown before the label.
+   */
+  icon?: LabIcon;
 
   /**
    * Optional visibility predicate.
@@ -345,12 +356,38 @@ export class LogEntryActionsRenderer implements IDisposable {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = `${ACTION_BUTTON_CLASS} jp-Button jp-mod-minimal`;
-      button.textContent = action.label;
-      button.title = action.caption ?? action.label;
+      const caption = action.caption ?? action.label ?? action.id;
+      button.title = caption;
+      button.setAttribute('aria-label', caption);
+
+      if (action.icon) {
+        const icon = action.icon.element({
+          tag: 'span',
+          className: ACTION_ICON_CLASS,
+          elementSize: 'normal'
+        });
+        icon.setAttribute('aria-hidden', 'true');
+        button.appendChild(icon);
+      }
+
+      if (action.label) {
+        const label = document.createElement('span');
+        label.textContent = action.label;
+        button.appendChild(label);
+      }
+
+      const successIcon = checkIcon.element({
+        tag: 'span',
+        className: ACTION_SUCCESS_ICON_CLASS,
+        elementSize: 'normal'
+      });
+      successIcon.setAttribute('aria-hidden', 'true');
+      button.appendChild(successIcon);
+
       button.addEventListener('click', event => {
         event.preventDefault();
         event.stopPropagation();
-        this._executeAction(action, message);
+        void this._executeAction(action, message, button);
       });
       container.appendChild(button);
     }
@@ -358,23 +395,27 @@ export class LogEntryActionsRenderer implements IDisposable {
     return container;
   }
 
-  private _executeAction(
+  private async _executeAction(
     action: ILogEntryAction,
-    message: ILogEntryActionMessage
-  ): void {
+    message: ILogEntryActionMessage,
+    button: HTMLButtonElement
+  ): Promise<void> {
     try {
-      const result = action.execute(message);
-      if (result && typeof (result as Promise<void>).catch === 'function') {
-        void (result as Promise<void>).catch(error => {
-          console.error(
-            `Failed to run log entry action "${action.id}".`,
-            error
-          );
-        });
-      }
+      await action.execute(message);
+      this._showSuccessState(button);
     } catch (error) {
       console.error(`Failed to run log entry action "${action.id}".`, error);
     }
+  }
+
+  private _showSuccessState(button: HTMLButtonElement): void {
+    button.classList.remove(ACTION_SUCCESS_CLASS);
+    void button.offsetWidth;
+    button.classList.add(ACTION_SUCCESS_CLASS);
+
+    window.setTimeout(() => {
+      button.classList.remove(ACTION_SUCCESS_CLASS);
+    }, ACTION_SUCCESS_DURATION_MS);
   }
 
   private _isDisposed = false;

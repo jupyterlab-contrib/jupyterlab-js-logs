@@ -22,8 +22,32 @@
   min-height: 20px;
   cursor: pointer;
   margin: 0;
+  gap: 4px;
+  position: relative;
 }
 
 .jp-JSLogs-entryActionButton:hover {
   background: var(--jp-layout-color2);
+}
+
+.jp-JSLogs-entryActionIcon,
+.jp-JSLogs-entryActionSuccessIcon {
+  transition: opacity 140ms ease;
+}
+
+.jp-JSLogs-entryActionSuccessIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.jp-JSLogs-entryActionButton.jp-mod-success .jp-JSLogs-entryActionIcon {
+  opacity: 0;
+}
+
+.jp-JSLogs-entryActionButton.jp-mod-success .jp-JSLogs-entryActionSuccessIcon {
+  opacity: 1;
 }

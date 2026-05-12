@@ -23,7 +23,12 @@ import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
-import { addIcon, clearIcon, LabIcon } from '@jupyterlab/ui-components';
+import {
+  addIcon,
+  clearIcon,
+  copyIcon,
+  LabIcon
+} from '@jupyterlab/ui-components';
 
 import { Token } from '@lumino/coreutils';
 
@@ -108,7 +113,7 @@ const defaultLogEntryActionsExtension: JupyterFrontEndPlugin<void> = {
   ) => {
     actionRegistry.register({
       id: 'jupyterlab-js-logs:copy-log-entry',
-      label: 'Copy',
+      icon: copyIcon,
       caption: 'Copy this log entry context',
       execute: message => {
         Clipboard.copyToSystem(formatLogEntryForClipboard(message));
