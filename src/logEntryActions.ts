@@ -12,7 +12,6 @@ const ACTIONS_CONTAINER_CLASS = 'jp-JSLogs-entryActions';
 const ACTION_BUTTON_CLASS = 'jp-JSLogs-entryActionButton';
 const OUTPUT_AREA_CLASS = 'jp-OutputArea';
 const OUTPUT_ITEM_CLASS = 'jp-OutputArea-child';
-const OUTPUT_CONTENT_CLASS = 'jp-OutputArea-output';
 
 type ISerializedLogOutput = Record<string, unknown>;
 
@@ -39,11 +38,6 @@ export interface ILogEntryActionMessage {
    * Entry timestamp when available.
    */
   timestamp: Date | null;
-
-  /**
-   * Best-effort text extracted from the output payload.
-   */
-  text: string;
 
   /**
    * Raw output payload for integrations that need full context.
@@ -282,14 +276,9 @@ export class LogEntryActionsRenderer implements IDisposable {
         continue;
       }
 
-      const outputNode = this._findOutputNode(outputItems[index]);
-      if (!outputNode) {
-        continue;
-      }
-
       const container = this._createActionsContainer(actions, message);
       if (container.childElementCount > 0) {
-        outputNode.appendChild(container);
+        outputItems[index].appendChild(container);
       }
     }
 
@@ -324,18 +313,6 @@ export class LogEntryActionsRenderer implements IDisposable {
     ) as HTMLElement[];
   }
 
-  private _findOutputNode(outputItem: HTMLElement): HTMLElement | null {
-    for (const child of Array.from(outputItem.children)) {
-      if (
-        child instanceof HTMLElement &&
-        child.classList.contains(OUTPUT_CONTENT_CLASS)
-      ) {
-        return child;
-      }
-    }
-    return null;
-  }
-
   private _toMessage(
     source: string,
     outputModel: IOutputModel,
@@ -346,14 +323,13 @@ export class LogEntryActionsRenderer implements IDisposable {
     const timestamp =
       outputModel instanceof LogOutputModel ? outputModel.timestamp : null;
 
-    const output = serializeOutput(outputModel, level, timestamp);
+    const output = serializeOutput(outputModel);
 
     return {
       source,
       entryIndex,
       level,
       timestamp,
-      text: extractText(output),
       output
     };
   }
@@ -368,7 +344,7 @@ export class LogEntryActionsRenderer implements IDisposable {
     for (const action of actions) {
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = ACTION_BUTTON_CLASS;
+      button.className = `${ACTION_BUTTON_CLASS} jp-Button jp-mod-minimal`;
       button.textContent = action.label;
       button.title = action.caption ?? action.label;
       button.addEventListener('click', event => {
@@ -418,25 +394,7 @@ export namespace LogEntryActionsRenderer {
   }
 }
 
-function extractText(output: ISerializedLogOutput): string {
-  const data =
-    typeof output.data === 'object' &&
-    output.data !== null &&
-    !Array.isArray(output.data)
-      ? (output.data as Record<string, unknown>)
-      : null;
-  if (data && typeof data['text/plain'] === 'string') {
-    return data['text/plain'];
-  }
-
-  return '';
-}
-
-function serializeOutput(
-  outputModel: IOutputModel,
-  level: string,
-  timestamp: Date | null
-): ISerializedLogOutput {
+function serializeOutput(outputModel: IOutputModel): ISerializedLogOutput {
   const output: ISerializedLogOutput = {
     output_type: outputModel.type,
     data:
@@ -452,13 +410,6 @@ function serializeOutput(
         ? (outputModel.metadata as Record<string, unknown>)
         : {}
   };
-
-  if (level !== 'unknown') {
-    output.level = level;
-  }
-  if (timestamp) {
-    output.timestamp = timestamp.getTime();
-  }
 
   return output;
 }

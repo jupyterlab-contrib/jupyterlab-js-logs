@@ -5,6 +5,7 @@ import {
 } from '@jupyterlab/application';
 
 import {
+  Clipboard,
   ICommandPalette,
   IWidgetTracker,
   MainAreaWidget,
@@ -28,6 +29,7 @@ import { Token } from '@lumino/coreutils';
 
 import {
   LogEntryActionsRenderer,
+  ILogEntryActionMessage,
   ILogEntryActionRegistry,
   LogEntryActionRegistry
 } from './logEntryActions';
@@ -61,6 +63,7 @@ export const ILogConsoleTracker = new Token<ILogConsoleTracker>(
 
 const PLUGIN_ID = 'js-logs';
 const ACTIONS_PLUGIN_ID = 'jupyterlab-js-logs:entry-actions';
+const DEFAULT_ACTIONS_PLUGIN_ID = 'jupyterlab-js-logs:default-entry-actions';
 const SETTINGS_PLUGIN_ID = 'jupyterlab-js-logs:plugin';
 const DEFAULT_LEVEL_SETTING = 'defaultLevel';
 const SHOW_LEVEL_CHANGE_MESSAGES_SETTING = 'showLevelChangeMessages';
@@ -85,6 +88,35 @@ const logEntryActionsExtension: JupyterFrontEndPlugin<ILogEntryActionRegistry> =
     activate: () => new LogEntryActionRegistry()
   };
 
+const formatLogEntryForClipboard = (message: ILogEntryActionMessage): string =>
+  JSON.stringify(
+    {
+      ...message,
+      timestamp: message.timestamp ? message.timestamp.toISOString() : null
+    },
+    null,
+    2
+  );
+
+const defaultLogEntryActionsExtension: JupyterFrontEndPlugin<void> = {
+  id: DEFAULT_ACTIONS_PLUGIN_ID,
+  autoStart: true,
+  requires: [ILogEntryActionRegistry],
+  activate: (
+    _app: JupyterFrontEnd,
+    actionRegistry: ILogEntryActionRegistry
+  ) => {
+    actionRegistry.register({
+      id: 'jupyterlab-js-logs:copy-log-entry',
+      label: 'Copy',
+      caption: 'Copy this log entry context',
+      execute: message => {
+        Clipboard.copyToSystem(formatLogEntryForClipboard(message));
+      }
+    });
+  }
+};
+
 /**
  * The main jupyterlab-js-logs plugin.
  */
@@ -92,20 +124,15 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
   id: PLUGIN_ID,
   autoStart: true,
   provides: ILogConsoleTracker,
-  requires: [IRenderMimeRegistry],
-  optional: [
-    ICommandPalette,
-    ILayoutRestorer,
-    ISettingRegistry,
-    ILogEntryActionRegistry
-  ],
+  requires: [IRenderMimeRegistry, ILogEntryActionRegistry],
+  optional: [ICommandPalette, ILayoutRestorer, ISettingRegistry],
   activate: (
     app: JupyterFrontEnd,
     rendermime: IRenderMimeRegistry,
+    actionRegistry: ILogEntryActionRegistry,
     palette: ICommandPalette | null,
     restorer: ILayoutRestorer | null,
-    settingsRegistry: ISettingRegistry | null,
-    actionRegistry: ILogEntryActionRegistry | null
+    settingsRegistry: ISettingRegistry | null
   ) => {
     const { commands } = app;
 
@@ -205,13 +232,11 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
       logConsolePanel.source = 'js-logs';
       connectLevelChangeHandler(logConsolePanel);
 
-      let entryActionRenderer: LogEntryActionsRenderer | null = null;
-      if (actionRegistry) {
-        entryActionRenderer = new LogEntryActionsRenderer({
+      let entryActionRenderer: LogEntryActionsRenderer | null =
+        new LogEntryActionsRenderer({
           panel: logConsolePanel,
           registry: actionRegistry
         });
-      }
 
       logConsoleWidget = new MainAreaWidget<LogConsolePanel>({
         content: logConsolePanel
@@ -449,6 +474,7 @@ const extension: JupyterFrontEndPlugin<ILogConsoleTracker> = {
 
 const plugins: JupyterFrontEndPlugin<any>[] = [
   logEntryActionsExtension,
+  defaultLogEntryActionsExtension,
   extension
 ];
 

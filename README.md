@@ -36,7 +36,8 @@ Notes:
 - Action `id` must be unique across all registered actions.
 - `register(...)` returns a disposable you can call to remove the action.
 - Buttons are rendered inline in each matching log row (inside the output content area, below the row text).
-- `execute(message)` receives `{ source, entryIndex, level, timestamp, text, output }`.
+- `execute(message)` receives `{ source, entryIndex, level, timestamp, output }`.
+- This extension ships with a default `Copy` action on log rows as an example consumer of this API.
 
 ```ts
 import {
