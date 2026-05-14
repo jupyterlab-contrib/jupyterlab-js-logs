@@ -5,9 +5,11 @@
 */
 
 .jp-JSLogs-entryActions {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   flex: 0 0 auto;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   margin: 2px 6px 2px 8px;
   white-space: nowrap;
@@ -15,15 +17,9 @@
 
 .jp-JSLogs-entryActionButton {
   border: 1px solid var(--jp-border-color2);
-  border-radius: var(--jp-border-radius);
-  background: var(--jp-layout-color1);
-  color: var(--jp-ui-font-color1);
   padding: 1px 6px;
   min-height: 20px;
   cursor: pointer;
-  margin: 0;
-  gap: 4px;
-  position: relative;
 }
 
 .jp-JSLogs-entryActionButton:hover {

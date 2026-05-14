@@ -93,15 +93,27 @@ const logEntryActionsExtension: JupyterFrontEndPlugin<ILogEntryActionRegistry> =
     activate: () => new LogEntryActionRegistry()
   };
 
-const formatLogEntryForClipboard = (message: ILogEntryActionMessage): string =>
-  JSON.stringify(
-    {
-      ...message,
-      timestamp: message.timestamp ? message.timestamp.toISOString() : null
-    },
-    null,
-    2
-  );
+const getLogEntryMessageText = (message: ILogEntryActionMessage): string => {
+  const rawData = message.output.data;
+  if (
+    typeof rawData !== 'object' ||
+    rawData === null ||
+    Array.isArray(rawData)
+  ) {
+    return '';
+  }
+  const data = rawData as Record<string, unknown>;
+  const text = data['text/plain'];
+
+  if (typeof text === 'string') {
+    return text.trim();
+  }
+  if (Array.isArray(text) && text.every(item => typeof item === 'string')) {
+    return text.join('').trim();
+  }
+
+  return '';
+};
 
 const defaultLogEntryActionsExtension: JupyterFrontEndPlugin<void> = {
   id: DEFAULT_ACTIONS_PLUGIN_ID,
@@ -114,9 +126,9 @@ const defaultLogEntryActionsExtension: JupyterFrontEndPlugin<void> = {
     actionRegistry.register({
       id: 'jupyterlab-js-logs:copy-log-entry',
       icon: copyIcon,
-      caption: 'Copy this log entry context',
+      caption: 'Copy this log message',
       execute: message => {
-        Clipboard.copyToSystem(formatLogEntryForClipboard(message));
+        Clipboard.copyToSystem(getLogEntryMessageText(message));
       }
     });
   }

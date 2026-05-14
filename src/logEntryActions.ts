@@ -151,12 +151,14 @@ export class LogEntryActionRegistry implements ILogEntryActionRegistry {
       throw new Error(`Log entry action "${actionId}" is already registered.`);
     }
 
-    this._actions.set(actionId, action);
+    const storedAction =
+      actionId === action.id ? action : { ...action, id: actionId };
+    this._actions.set(actionId, storedAction);
     this._changed.emit(void 0);
 
     return new DisposableDelegate(() => {
       const current = this._actions.get(actionId);
-      if (current === action) {
+      if (current === storedAction) {
         this._actions.delete(actionId);
         this._changed.emit(void 0);
       }
@@ -409,13 +411,19 @@ export class LogEntryActionsRenderer implements IDisposable {
   }
 
   private _showSuccessState(button: HTMLButtonElement): void {
+    const previousTimer = this._successTimers.get(button);
+    if (previousTimer !== undefined) {
+      window.clearTimeout(previousTimer);
+    }
+
     button.classList.remove(ACTION_SUCCESS_CLASS);
     void button.offsetWidth;
     button.classList.add(ACTION_SUCCESS_CLASS);
 
-    window.setTimeout(() => {
+    const timer = window.setTimeout(() => {
       button.classList.remove(ACTION_SUCCESS_CLASS);
     }, ACTION_SUCCESS_DURATION_MS);
+    this._successTimers.set(button, timer);
   }
 
   private _isDisposed = false;
@@ -424,6 +432,7 @@ export class LogEntryActionsRenderer implements IDisposable {
   private _lastRenderedSource: string | null = null;
   private _lastRenderedLoggerVersion: number | null = null;
   private _lastRenderedRegistryRevision = -1;
+  private _successTimers = new WeakMap<HTMLButtonElement, number>();
   private _panel: LogConsolePanel;
   private _registry: ILogEntryActionRegistry;
 }
