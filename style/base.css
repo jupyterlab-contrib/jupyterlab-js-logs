@@ -3,3 +3,48 @@
 
     https://jupyterlab.readthedocs.io/en/stable/developer/css.html
 */
+
+.jp-JSLogs-entryActions {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 2px 6px 2px 8px;
+  white-space: nowrap;
+}
+
+.jp-JSLogs-entryActionButton {
+  border: 1px solid var(--jp-border-color2);
+  padding: 1px 6px;
+  min-height: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.jp-JSLogs-entryActionButton:hover {
+  background: var(--jp-layout-color2);
+}
+
+.jp-JSLogs-entryActionIcon,
+.jp-JSLogs-entryActionSuccessIcon {
+  transition: opacity 140ms ease;
+}
+
+.jp-JSLogs-entryActionSuccessIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.jp-JSLogs-entryActionButton.jp-mod-success .jp-JSLogs-entryActionIcon {
+  opacity: 0;
+}
+
+.jp-JSLogs-entryActionButton.jp-mod-success .jp-JSLogs-entryActionSuccessIcon {
+  opacity: 1;
+}

@@ -25,6 +25,47 @@ The extension exposes two settings in JupyterLab Settings Editor (`JS Logs`):
 - `defaultLevel`: default log level when opening the JS Logs panel. Default: `info`.
 - `showLevelChangeMessages`: whether to show metadata messages when log level changes. Default: `false`.
 
+## Extension point: log entry actions
+
+This package provides an `ILogEntryActionRegistry` token for adding user-triggered actions to log rows in the JS Logs panel.
+
+Actions are only executed when a user clicks a button. The extension does not automatically send log data anywhere.
+
+Notes:
+
+- Action `id` must be unique across all registered actions.
+- `register(...)` returns a disposable you can call to remove the action.
+- Buttons are rendered inline in each matching log row (at the right side of the row content).
+- Actions can optionally provide an `icon` (for example from `@jupyterlab/ui-components`).
+- `execute(message)` receives `{ source, entryIndex, level, timestamp, output }`.
+- This extension ships with a default `Copy` action on log rows as an example consumer of this API.
+
+```ts
+import {
+  JupyterFrontEnd,
+  JupyterFrontEndPlugin
+} from '@jupyterlab/application';
+import { ILogEntryActionRegistry } from 'jupyterlab-js-logs';
+
+const plugin: JupyterFrontEndPlugin<void> = {
+  id: 'my-log-actions',
+  autoStart: true,
+  requires: [ILogEntryActionRegistry],
+  activate: (_app: JupyterFrontEnd, actions: ILogEntryActionRegistry) => {
+    actions.register({
+      id: 'my-actions:copy-log-context',
+      label: 'Copy Context',
+      caption: 'Run a custom action with this log entry',
+      isVisible: message => ['error', 'critical'].includes(message.level),
+      execute: message => {
+        // Use the selected row context in your integration.
+        console.log('Selected log entry:', message);
+      }
+    });
+  }
+};
+```
+
 ## Install
 
 ```bash
