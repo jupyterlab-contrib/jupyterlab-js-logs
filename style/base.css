@@ -20,6 +20,7 @@
   padding: 1px 6px;
   min-height: 20px;
   cursor: pointer;
+  position: relative;
 }
 
 .jp-JSLogs-entryActionButton:hover {
