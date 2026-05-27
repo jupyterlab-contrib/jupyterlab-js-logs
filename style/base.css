@@ -27,8 +27,7 @@
   background: var(--jp-layout-color2);
 }
 
-.jp-JSLogs-entryActionIcon,
-.jp-JSLogs-entryActionSuccessIcon {
+.jp-JSLogs-entryActionButton > span {
   transition: opacity 140ms ease;
 }
 
@@ -41,7 +40,8 @@
   pointer-events: none;
 }
 
-.jp-JSLogs-entryActionButton.jp-mod-success .jp-JSLogs-entryActionIcon {
+.jp-JSLogs-entryActionButton.jp-mod-success
+  > :not(.jp-JSLogs-entryActionSuccessIcon) {
   opacity: 0;
 }
 
