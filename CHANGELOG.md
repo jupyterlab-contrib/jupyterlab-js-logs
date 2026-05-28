@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.3.1
+
+([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/compare/v1.3.0...feec98b1f47673c9a0dbc0fee3b08fe33aba017f))
+
+### Bugs fixed
+
+- Fix text overlap transition on buttons [#53](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/pull/53) ([@MUFFANUJ](https://github.com/MUFFANUJ), [@krassowski](https://github.com/krassowski))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/graphs/contributors?from=2026-05-14&to=2026-05-28&type=c))
+
+@krassowski ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3Akrassowski+updated%3A2026-05-14..2026-05-28&type=Issues)) | @MUFFANUJ ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3AMUFFANUJ+updated%3A2026-05-14..2026-05-28&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.3.0
 
 ([Full Changelog](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/compare/v1.2.0...af5e51b6d2663c048d2ceb8c83bdf3718ea1d161))
@@ -18,8 +37,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlab-contrib/jupyterlab-js-logs/graphs/contributors?from=2026-04-25&to=2026-05-14&type=c))
 
 @krassowski ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3Akrassowski+updated%3A2026-04-25..2026-05-14&type=Issues)) | @MUFFANUJ ([activity](https://github.com/search?q=repo%3Ajupyterlab-contrib%2Fjupyterlab-js-logs+involves%3AMUFFANUJ+updated%3A2026-04-25..2026-05-14&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.2.0
 
